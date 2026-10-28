@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FutCentral - Jogos do Dia e Transmissões</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-950 text-gray-100 font-sans min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-gray-900 border-b border-gray-800 sticky top-0 z-50 shadow-md">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="bg-green-500 text-gray-950 p-2 rounded-xl font-bold">
+          <i class="fa-solid fa-futbol text-xl"></i>
+        </div>
+        <h1 class="text-xl font-extrabold tracking-wide text-white">Fut<span class="text-green-400">Central</span></h1>
+      </div>
+      <div class="flex items-center space-x-2 text-xs bg-green-500/10 text-green-400 border border-green-500/20 px-3 py-1.5 rounded-full">
+        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+        <span class="font-medium">Atualizado ao Vivo</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Filtros -->
+  <section class="bg-gray-900/50 border-b border-gray-800 backdrop-blur-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 space-y-3">
+      <div class="flex flex-col sm:flex-row justify-between gap-3">
+        <div class="relative flex-1">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400"></i>
+          <input type="text" id="searchInput" placeholder="Buscar time ou liga..." 
+            class="w-full pl-9 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm focus:outline-none focus:border-green-500 text-white placeholder-gray-400">
+        </div>
+        <input type="date" id="dateInput" onchange="carregarJogosData(this.value)" 
+          class="bg-gray-800 border border-gray-700 text-sm rounded-lg px-3 py-2 text-white focus:outline-none focus:border-green-500">
+      </div>
+
+      <div class="flex gap-2 overflow-x-auto pb-1 text-sm">
+        <button onclick="filtrarRegiao('todos')" data-regiao="todos" class="btn-filtro px-4 py-1.5 rounded-lg font-medium whitespace-nowrap bg-green-500 text-gray-950">Todos</button>
+        <button onclick="filtrarRegiao('Brasil')" data-regiao="Brasil" class="btn-filtro px-4 py-1.5 rounded-lg font-medium whitespace-nowrap bg-gray-800 text-gray-300">Brasil</button>
+        <button onclick="filtrarRegiao('América do Sul')" data-regiao="América do Sul" class="btn-filtro px-4 py-1.5 rounded-lg font-medium whitespace-nowrap bg-gray-800 text-gray-300">América do Sul</button>
+        <button onclick="filtrarRegiao('Europa')" data-regiao="Europa" class="btn-filtro px-4 py-1.5 rounded-lg font-medium whitespace-nowrap bg-gray-800 text-gray-300">Europa</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Conteúdo Principal -->
+  <main class="max-w-6xl mx-auto px-4 py-6 flex-1 w-full">
+    <div id="container-jogos" class="space-y-4"></div>
+  </main>
+
+  <footer class="bg-gray-900 border-t border-gray-800 text-center text-xs text-gray-500 py-4">
+    <p>FutCentral © 2026 - Onde assistir aos principais campeonatos do mundo.</p>
+  </footer>
+
+  <script>
+    // Aberto pelo servidor, usa o mesmo endereço; aberto direto do arquivo, usa o backend local
+    const API_BASE = location.protocol === 'file:' ? 'http://127.0.0.1:8000' : '';
+
+    // Data de hoje no fuso do navegador (toISOString usaria UTC e viraria o dia às 21h no Brasil)
+    function dataLocal(d = new Date()) {
+      const pad = n => String(n).padStart(2, '0');
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    }
+
+    // Escapa textos vindos da API antes de colocar no HTML (evita XSS)
+    function esc(texto) {
+      return String(texto ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    document.getElementById('dateInput').value = dataLocal();
+
+    async function carregarJogosDoBackend(data) {
+      const container = document.getElementById('container-jogos');
+      container.innerHTML = `
+        <div class="text-center py-12 text-gray-400">
+          <i class="fa-solid fa-spinner fa-spin text-3xl mb-2 text-green-400"></i>
+          <p>Carregando partidas em tempo real...</p>
+        </div>`;
+
+      try {
+        const resposta = await fetch(`${API_BASE}/api/jogos?data=${encodeURIComponent(data)}`);
+        const resultado = await resposta.json();
+
+        jogosDoDia = Array.isArray(resultado) ? resultado : (resultado.dados || []);
+        aplicarFiltros();
+
+      } catch (erro) {
+        console.error("Erro na comunicação com o backend:", erro);
+        container.innerHTML = `
+          <div class="text-center py-12 text-red-400">
+            <i class="fa-solid fa-triangle-exclamation text-3xl mb-2"></i>
+            <p>Não foi possível carregar os jogos. Tente novamente em instantes.</p>
+          </div>`;
+      }
+    }
+
+    function renderizarJogos(lista) {
+      const container = document.getElementById('container-jogos');
+      container.innerHTML = '';
+
+      if (!lista || lista.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-gray-500">
+            <i class="fa-solid fa-calendar-xmark text-4xl mb-3"></i>
+            <p>Nenhum jogo encontrado para esta data ou filtro.</p>
+          </div>`;
+        return;
+      }
+
+      lista.forEach(jogo => {
+        const card = document.createElement('div');
+        card.className = "bg-gray-900 border border-gray-800 rounded-xl p-4 hover:border-gray-700 transition shadow-lg space-y-3";
+        
+        const canais = jogo.transmissao || [];
+        const canaisHtml = canais.length
+          ? canais.map(canal =>
+              `<span class="bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded text-xs font-semibold">${esc(canal)}</span>`
+            ).join(' ')
+          : `<span class="text-gray-500 italic">Transmissão a confirmar</span>`;
+
+        // Antes do jogo mostra "VS"; durante e depois, o placar
+        const temPlacar = jogo.estado !== 'pre' && jogo.placarMandante != null && jogo.placarVisitante != null;
+        const meioHtml = temPlacar
+          ? `<div class="px-4 text-xl font-black tabular-nums ${jogo.estado === 'in' ? 'text-green-400' : 'text-white'}">${esc(jogo.placarMandante)} <span class="text-gray-500">x</span> ${esc(jogo.placarVisitante)}</div>`
+          : `<div class="px-4 text-xs font-black text-gray-500 uppercase">VS</div>`;
+        const statusClasse = jogo.estado === 'in' ? 'bg-green-500/15 text-green-400' : 'bg-gray-800 text-gray-300';
+
+        card.innerHTML = `
+          <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+            <span class="text-xs font-bold text-green-400 uppercase tracking-wider">${esc(jogo.liga)}</span>
+            <span class="text-xs ${statusClasse} px-2 py-1 rounded font-mono">${esc(jogo.horario)} - ${esc(jogo.status)}</span>
+          </div>
+
+          <div class="flex items-center justify-between py-2">
+            <div class="flex-1 text-right font-bold text-base text-gray-100">${esc(jogo.mandante)}</div>
+            ${meioHtml}
+            <div class="flex-1 text-left font-bold text-base text-gray-100">${esc(jogo.visitante)}</div>
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-gray-800/60 text-xs">
+            <span class="text-gray-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-tv text-gray-500"></i> Onde assistir:
+            </span>
+            <div class="flex gap-1.5 flex-wrap justify-end">
+              ${canaisHtml}
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Jogos da data carregada e filtros escolhidos; filtrar não chama o backend de novo
+    let jogosDoDia = [];
+    let regiaoAtual = 'todos';
+
+    // Minúsculas e sem acentos, para "sao paulo" achar "São Paulo"
+    function normalizar(texto) {
+      return String(texto ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    }
+
+    function aplicarFiltros() {
+      const busca = normalizar(document.getElementById('searchInput').value.trim());
+      const filtrados = jogosDoDia.filter(jogo => {
+        if (regiaoAtual !== 'todos' && jogo.regiao !== regiaoAtual) return false;
+        if (!busca) return true;
+        return [jogo.mandante, jogo.visitante, jogo.liga, jogo.pais].some(campo => normalizar(campo).includes(busca));
+      });
+      renderizarJogos(filtrados);
+    }
+
+    function filtrarRegiao(regiao) {
+      regiaoAtual = regiao;
+      document.querySelectorAll('.btn-filtro').forEach(btn => {
+        const ativo = btn.dataset.regiao === regiao;
+        btn.classList.toggle('bg-green-500', ativo);
+        btn.classList.toggle('text-gray-950', ativo);
+        btn.classList.toggle('bg-gray-800', !ativo);
+        btn.classList.toggle('text-gray-300', !ativo);
+      });
+      aplicarFiltros();
+    }
+
+    document.getElementById('searchInput').addEventListener('input', aplicarFiltros);
+
+    function carregarJogosData(data) {
+      carregarJogosDoBackend(data);
+    }
+
+    carregarJogosDoBackend(dataLocal());
+  </script>
+</body>
+</html>

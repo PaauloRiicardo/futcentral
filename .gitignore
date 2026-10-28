@@ -1,0 +1,14 @@
+# Segredos
+.env
+
+# Cache das respostas da SportAPI7
+.cache/
+
+# Ambiente virtual e cache do Python
+.sitevirtual/
+__pycache__/
+*.pyc
+
+# Ferramentas locais
+.claude/
+.vscode/

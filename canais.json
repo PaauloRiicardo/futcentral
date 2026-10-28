@@ -1,0 +1,47 @@
+{
+  "_como_usar": [
+    "campeonatos: canais padrão de cada campeonato, valem para todos os jogos dele.",
+    "jogos: canais de um jogo específico; substituem o padrão do campeonato.",
+    "A chave do jogo é 'AAAA-MM-DD Mandante x Visitante', com os nomes como aparecem no site.",
+    "Exemplo: \"2026-10-28 Santos x Palmeiras\": [\"Premiere\", \"Globoplay\"]",
+    "Lista vazia [] mostra 'Transmissão a confirmar'. Não precisa reiniciar o servidor após editar."
+  ],
+  "_fontes": [
+    "Atualizado em 2026-10-28, temporada 2026 (Brasil) e 2026/27 (Europa).",
+    "Campeonatos com lista vazia dividem os jogos entre emissoras diferentes a cada rodada; preencha esses jogos em 'jogos'.",
+    "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil)."
+  ],
+  "campeonatos": {
+    "Brasileirão Série A": ["Premiere"],
+    "Brasileirão Série B": ["Disney+"],
+    "Copa do Brasil": [],
+    "Libertadores": [],
+    "Sul-Americana": [],
+    "Eliminatórias CONMEBOL": [],
+    "Premier League": ["Disney+"],
+    "FA Cup": ["Disney+"],
+    "Copa da Liga Inglesa": ["Disney+"],
+    "LaLiga": ["CazéTV"],
+    "Copa del Rey": ["Disney+"],
+    "Serie A (Itália)": ["Disney+"],
+    "Coppa Italia": ["SportyNet"],
+    "Bundesliga": [],
+    "DFB-Pokal": ["Disney+"],
+    "Ligue 1": ["CazéTV"],
+    "Liga Portugal": [],
+    "Champions League": ["HBO Max"],
+    "Europa League": ["CazéTV"],
+    "Conference League": ["CazéTV"],
+    "Nations League": []
+  },
+  "jogos": {
+    "2026-10-28 Fluminense x Internacional": ["Record", "RecordPlus", "CazéTV", "Premiere"],
+    "2026-10-28 Bahia x São Paulo": ["Globo (SP, BA, CE e outras regiões)", "ge tv", "Premiere"],
+    "2026-10-28 Remo x Botafogo": ["Globo (RJ, PA e outras regiões)", "Premiere"],
+    "2026-10-28 Liverpool x Chelsea": ["ESPN", "Disney+"],
+    "2026-10-28 AC Milan x Bolonha": ["ESPN4", "Disney+"],
+    "2026-10-28 Venezia x Internazionale": ["SportyNet (YouTube)", "Disney+"],
+    "2026-10-28 Genoa x Juventus": ["SportyNet (YouTube)", "Disney+"],
+    "2026-10-28 Bayern Munich x 1. FC Magdeburg": ["ESPN4", "Disney+"]
+  }
+}

@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 import json
@@ -22,11 +22,30 @@ app.add_middleware(
 
 PAGINA = Path(__file__).parent / "site_esportivo.html"
 
+# Imagens da prévia nas redes (og.jpg) e ícones do site. Só estes nomes são servidos.
+PASTA_ESTATICA = Path(__file__).parent / "static"
+ARQUIVOS_ESTATICOS = {"og.jpg", "favicon.svg", "favicon.png", "apple-touch-icon.png"}
+CACHE_1_DIA = {"Cache-Control": "public, max-age=86400"}
 
-@app.get("/", include_in_schema=False)
+
+# HEAD também, porque alguns robôs de prévia (WhatsApp, Facebook) conferem a página com HEAD antes
+@app.api_route("/", methods=["GET", "HEAD"], include_in_schema=False)
 def pagina_inicial():
     # O próprio backend entrega o site, assim tudo fica num endereço só
     return FileResponse(PAGINA)
+
+
+@app.api_route("/static/{nome}", methods=["GET", "HEAD"], include_in_schema=False)
+def arquivo_estatico(nome: str):
+    if nome not in ARQUIVOS_ESTATICOS:
+        raise HTTPException(status_code=404)
+    return FileResponse(PASTA_ESTATICA / nome, headers=CACHE_1_DIA)
+
+
+@app.api_route("/favicon.ico", methods=["GET", "HEAD"], include_in_schema=False)
+def favicon():
+    # Navegadores antigos procuram o ícone neste endereço fixo
+    return FileResponse(PASTA_ESTATICA / "favicon.png", media_type="image/png", headers=CACHE_1_DIA)
 
 # API pública da ESPN: não precisa de chave, mas não é oficial (pode mudar sem aviso)
 ESPN_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/{liga}/scoreboard"

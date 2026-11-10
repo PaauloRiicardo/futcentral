@@ -47,6 +47,7 @@ uv pip install -r requirements.txt
 | `main.py` | API: `GET /` entrega o site; `GET /api/jogos?data=AAAA-MM-DD` devolve os jogos |
 | `site_esportivo.html` | A página: filtros, cards dos jogos, atualização automática |
 | `canais.json` | Onde assistir: canais padrão por campeonato e canais de jogos específicos |
+| `static/` | `og.jpg` (imagem da prévia ao compartilhar o link, 1200×630) e os ícones do site |
 | `render.yaml` | Configuração do serviço no Render |
 | `.github/workflows/publicar-render.yml` | Publica no Render a cada push na `main` |
 | `.github/workflows/manter-acordado.yml` | Acessa o site a cada 10 min para o Render não "dormir" |
@@ -70,6 +71,11 @@ Em `main.py`, no dicionário `LIGAS_PRINCIPAIS`, cada linha liga o código da ES
 
 ### Escolher quais seleções aparecem nos amistosos
 Em `main.py`, na lista `SELECOES_PRINCIPAIS`, separada por continente. Escreva o nome em **português e em inglês**, porque a ESPN às vezes devolve em inglês. Acentos e maiúsculas não importam.
+
+### Prévia ao compartilhar o link
+Título, descrição e imagem ficam nas tags `og:` e `twitter:` do `<head>` do `site_esportivo.html`. Os endereços usam `https://futcentral.onrender.com`: **se o domínio mudar, troque nessas tags**. Para trocar a imagem, substitua o `static/og.jpg`, mantendo 1200×630 e menos de 300 KB.
+
+O WhatsApp e o Facebook guardam a prévia por alguns dias. Para forçar a atualização, use o [Sharing Debugger](https://developers.facebook.com/tools/debug/) → **Scrape Again**.
 
 ## API
 

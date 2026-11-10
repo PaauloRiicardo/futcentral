@@ -10,7 +10,8 @@
     "Atualizado em 2026-10-28, temporada 2026 (Brasil) e 2026/27 (Europa).",
     "Campeonatos com lista vazia dividem os jogos entre emissoras diferentes a cada rodada; preencha esses jogos em 'jogos'.",
     "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil).",
-    "Amistosos do Brasil em 14/11 e 17/11/2026: Imirante (09/11/2026) — Globo, SporTV e ge tv nos dois jogos."
+    "Amistosos do Brasil em 14/11 e 17/11/2026: Imirante (09/11/2026) — Globo, SporTV e ge tv nos dois jogos.",
+    "Liga das Nações 2026/27: direitos divididos entre SporTV (Globo) e ESPN/Disney+, escala definida jogo a jogo (Imirante 24/09/2026, SBT News e Portal de Prefeitura 01/10/2026). Cadastre o canal exato em 'jogos' quando a grade do dia sair."
   ],
   "campeonatos": {
     "Brasileirão Série A": ["Premiere"],
@@ -33,7 +34,7 @@
     "Champions League": ["HBO Max"],
     "Europa League": ["CazéTV"],
     "Conference League": ["CazéTV"],
-    "Liga das Nações": [],
+    "Liga das Nações": ["SporTV ou ESPN/Disney+ (varia por jogo)"],
     "Amistosos de Seleções": []
   },
   "jogos": {

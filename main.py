@@ -2,15 +2,37 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 import json
+import os
 import unicodedata
 import time
 import requests
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
-from threading import Lock
+from threading import Lock, Thread
 
 app = FastAPI()
+
+
+# Mantém o site acordado no plano gratuito do Render, que desliga o serviço após 15 min
+# sem visitas. O próprio servidor visita o seu endereço público a cada 10 min; a visita
+# passa pela rede do Render e conta como tráfego. RENDER_EXTERNAL_URL é definida pelo
+# próprio Render, então no computador local isto não roda.
+URL_PUBLICA = os.environ.get("RENDER_EXTERNAL_URL", "").rstrip("/")
+INTERVALO_AUTO_VISITA = 10 * 60
+
+
+def _manter_acordado():
+    while True:
+        time.sleep(INTERVALO_AUTO_VISITA)
+        try:
+            requests.head(f"{URL_PUBLICA}/", timeout=30)
+        except requests.RequestException as e:
+            print(f"Auto-visita falhou (tenta de novo em 10 min): {e}")
+
+
+if URL_PUBLICA:
+    Thread(target=_manter_acordado, daemon=True, name="manter-acordado").start()
 
 app.add_middleware(
     CORSMiddleware,

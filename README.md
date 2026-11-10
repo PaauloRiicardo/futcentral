@@ -50,7 +50,8 @@ uv pip install -r requirements.txt
 | `static/` | `og.jpg` (imagem da prévia ao compartilhar o link, 1200×630) e os ícones do site |
 | `render.yaml` | Configuração do serviço no Render |
 | `.github/workflows/publicar-render.yml` | Publica no Render a cada push na `main` |
-| `.github/workflows/manter-acordado.yml` | Acessa o site a cada 10 min para o Render não "dormir" |
+| `.github/workflows/manter-acordado.yml` | Reserva: acessa o site a cada 10 min pelo GitHub (o agendamento do GitHub atrasa ou falha às vezes; o principal é a auto-visita no `main.py`) |
+| `.github/workflows/listar-jogos.yml` | Lista os jogos de uma data no log; usada pela tarefa diária que cadastra os canais |
 
 ## Como mudar as coisas mais comuns
 
@@ -116,4 +117,5 @@ O GitHub Actions avisa o Render, que publica em 1 a 5 minutos. Acompanhe em **Ac
 - A API da ESPN **não é oficial**: pode mudar ou sair do ar sem aviso.
 - A ESPN só informa canais dos EUA, por isso os canais do Brasil são cadastrados à mão.
 - No plano gratuito do Render, o site fica ligado cerca de 744 h por mês, das 750 h grátis.
-- O GitHub pausa o monitor se o repositório ficar 60 dias sem commits. Para reativar, abra **Actions → Manter site acordado → Enable workflow**.
+- Para o site não "dormir", o `main.py` visita o próprio endereço a cada 10 min quando roda no Render (variável `RENDER_EXTERNAL_URL`, definida pelo Render). Se o serviço for reiniciado e ficar sem visitas, a primeira visita ainda demora uns 30 s.
+- O monitor do GitHub é só reserva: o GitHub pode atrasar ou pular agendamentos e o pausa se o repositório ficar 60 dias sem commits.

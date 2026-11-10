@@ -1,0 +1,22 @@
+# Acessa o site a cada 10 minutos para o plano gratuito do Render não "dormir"
+# (o Render desliga o serviço após 15 min sem visitas e a volta leva ~30 s).
+# Acessa só a página inicial, que não consulta a ESPN.
+name: Manter site acordado
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"   # a cada 10 min (horário UTC; o GitHub pode atrasar alguns minutos)
+  workflow_dispatch:          # botão "Run workflow" para testar na hora
+
+permissions: {}               # não precisa de acesso ao repositório
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Acessar o FutCentral
+        run: |
+          curl -fsS --retry 3 --retry-delay 20 --retry-all-errors --max-time 90 \
+            -o /dev/null -w "HTTP %{http_code} em %{time_total}s\n" \
+            https://futcentral.onrender.com/

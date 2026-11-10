@@ -9,6 +9,7 @@ on:
     paths-ignore:                        # mudanças que não alteram o site não geram deploy
       - "**.md"
       - ".github/workflows/manter-acordado.yml"
+      - ".github/workflows/listar-jogos.yml"
   workflow_dispatch:                     # botão "Run workflow" para publicar na hora
 
 permissions: {}                          # não precisa de acesso ao repositório

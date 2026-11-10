@@ -122,7 +122,7 @@ def _erro(codigo, mensagem):
 # Dias que já passaram não mudam mais e ficam no cache para sempre; os dias
 # com jogos acontecendo agora expiram rápido para o placar ficar atualizado.
 CACHE_SEGUNDOS = 3 * 3600
-CACHE_SEGUNDOS_AO_VIVO = 120
+CACHE_SEGUNDOS_AO_VIVO = 60  # o site atualiza sozinho a cada 60 s
 CACHE_ARQUIVO = Path(__file__).parent / ".cache" / "espn.json"
 _cache_lock = Lock()
 

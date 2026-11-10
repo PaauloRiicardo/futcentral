@@ -43,12 +43,14 @@
         <button onclick="filtrarRegiao('Brasil')" data-regiao="Brasil" class="btn-filtro px-4 py-1.5 rounded-lg font-medium whitespace-nowrap bg-gray-800 text-gray-300">Brasil</button>
         <button onclick="filtrarRegiao('América do Sul')" data-regiao="América do Sul" class="btn-filtro px-4 py-1.5 rounded-lg font-medium whitespace-nowrap bg-gray-800 text-gray-300">América do Sul</button>
         <button onclick="filtrarRegiao('Europa')" data-regiao="Europa" class="btn-filtro px-4 py-1.5 rounded-lg font-medium whitespace-nowrap bg-gray-800 text-gray-300">Europa</button>
+        <button onclick="filtrarRegiao('Seleções')" data-regiao="Seleções" class="btn-filtro px-4 py-1.5 rounded-lg font-medium whitespace-nowrap bg-gray-800 text-gray-300">Seleções</button>
       </div>
     </div>
   </section>
 
   <!-- Conteúdo Principal -->
   <main class="max-w-6xl mx-auto px-4 py-6 flex-1 w-full">
+    <div id="aviso" class="hidden mb-4 bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 text-sm rounded-lg px-4 py-3"></div>
     <div id="container-jogos" class="space-y-4"></div>
   </main>
 
@@ -81,19 +83,39 @@
           <p>Carregando partidas em tempo real...</p>
         </div>`;
 
+      const aviso = document.getElementById('aviso');
+      aviso.classList.add('hidden');
+
       try {
         const resposta = await fetch(`${API_BASE}/api/jogos?data=${encodeURIComponent(data)}`);
-        const resultado = await resposta.json();
+        const resultado = await resposta.json().catch(() => ({}));
 
-        jogosDoDia = Array.isArray(resultado) ? resultado : (resultado.dados || []);
+        // Erro do servidor ou da ESPN: mostra o erro, nunca "Nenhum jogo encontrado"
+        if (!resposta.ok || resultado.status === 'erro') {
+          throw new Error(resultado.mensagem || `Erro ${resposta.status}`);
+        }
+
+        // Algumas ligas falharam: mostra o que veio e avisa que pode faltar jogo
+        if (resultado.status === 'parcial') {
+          const ligas = (resultado.ligasComFalha || []).join(', ');
+          aviso.innerHTML = `<i class="fa-solid fa-circle-exclamation mr-1"></i> Alguns campeonatos não carregaram${ligas ? ` (${esc(ligas)})` : ''}. A lista pode estar incompleta. <button onclick="carregarJogosDoBackend(document.getElementById('dateInput').value)" class="underline font-semibold ml-1">Recarregar</button>`;
+          aviso.classList.remove('hidden');
+        }
+
+        jogosDoDia = resultado.dados || [];
         aplicarFiltros();
 
       } catch (erro) {
-        console.error("Erro na comunicação com o backend:", erro);
+        console.error("Erro ao carregar os jogos:", erro);
+        jogosDoDia = [];
         container.innerHTML = `
           <div class="text-center py-12 text-red-400">
             <i class="fa-solid fa-triangle-exclamation text-3xl mb-2"></i>
-            <p>Não foi possível carregar os jogos. Tente novamente em instantes.</p>
+            <p>${esc(erro.message && !erro.message.startsWith('Failed') ? erro.message : 'Não foi possível carregar os jogos. Tente novamente em instantes.')}</p>
+            <button onclick="carregarJogosDoBackend(document.getElementById('dateInput').value)"
+              class="mt-4 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-200 rounded-lg text-sm">
+              <i class="fa-solid fa-rotate-right mr-1"></i> Tentar novamente
+            </button>
           </div>`;
       }
     }
@@ -166,7 +188,8 @@
     function aplicarFiltros() {
       const busca = normalizar(document.getElementById('searchInput').value.trim());
       const filtrados = jogosDoDia.filter(jogo => {
-        if (regiaoAtual !== 'todos' && jogo.regiao !== regiaoAtual) return false;
+        // Um jogo pode estar em mais de uma aba (ex.: Japão x Brasil em Seleções e em Brasil)
+        if (regiaoAtual !== 'todos' && !(jogo.regioes || [jogo.regiao]).includes(regiaoAtual)) return false;
         if (!busca) return true;
         return [jogo.mandante, jogo.visitante, jogo.liga, jogo.pais].some(campo => normalizar(campo).includes(busca));
       });

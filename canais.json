@@ -32,7 +32,8 @@
     "Champions League": ["HBO Max"],
     "Europa League": ["CazéTV"],
     "Conference League": ["CazéTV"],
-    "Nations League": []
+    "Liga das Nações": [],
+    "Amistosos de Seleções": []
   },
   "jogos": {
     "2026-10-28 Fluminense x Internacional": ["Record", "RecordPlus", "CazéTV", "Premiere"],

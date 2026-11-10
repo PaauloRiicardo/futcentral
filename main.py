@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 import json
+import unicodedata
 import time
 import requests
 from concurrent.futures import ThreadPoolExecutor
@@ -56,8 +57,65 @@ LIGAS_PRINCIPAIS = {
     "uefa.champions": ("Champions League", "Europa", "Europa"),
     "uefa.europa": ("Europa League", "Europa", "Europa"),
     "uefa.europa.conf": ("Conference League", "Europa", "Europa"),
-    "uefa.nations": ("Nations League", "Europa", "Europa"),
+    "uefa.nations": ("Liga das Nações", "Europa", "Europa"),
+    # Amistosos de seleções do mundo todo; só entram os das SELECOES_PRINCIPAIS abaixo
+    "fifa.friendly": ("Amistosos de Seleções", "Seleções", "Seleções"),
 }
+
+LIGA_AMISTOSOS = "fifa.friendly"
+
+# Seleções cujos amistosos aparecem no site, por continente. Nomes em PT e EN, porque a
+# ESPN às vezes devolve o nome em inglês mesmo com lang=pt. Acentos e maiúsculas não importam.
+# Para incluir ou tirar uma seleção, é só editar esta lista.
+SELECOES_PRINCIPAIS = {
+    "América do Norte": ["Estados Unidos", "United States", "USA", "EUA", "México", "Mexico",
+                         "Canadá", "Canada", "Costa Rica", "Panamá", "Panama", "Jamaica"],
+    "América do Sul": ["Brasil", "Brazil", "Argentina", "Uruguai", "Uruguay", "Colômbia", "Colombia",
+                       "Equador", "Ecuador", "Paraguai", "Paraguay", "Chile", "Peru", "Venezuela",
+                       "Bolívia", "Bolivia"],
+    "Europa": ["França", "France", "Espanha", "Spain", "Inglaterra", "England", "Portugal",
+               "Alemanha", "Germany", "Itália", "Italy", "Holanda", "Países Baixos", "Netherlands",
+               "Bélgica", "Belgium", "Croácia", "Croatia", "Suíça", "Switzerland", "Dinamarca",
+               "Denmark", "Áustria", "Austria", "Turquia", "Türkiye", "Turkey", "Noruega", "Norway",
+               "Ucrânia", "Ukraine", "Polônia", "Poland", "Sérvia", "Serbia", "Escócia", "Scotland",
+               "Suécia", "Sweden"],
+    "África": ["Marrocos", "Morocco", "Senegal", "Egito", "Egypt", "Nigéria", "Nigeria",
+               "Costa do Marfim", "Ivory Coast", "Côte d'Ivoire", "Argélia", "Algeria", "Tunísia",
+               "Tunisia", "Camarões", "Cameroon", "Gana", "Ghana", "Mali", "África do Sul", "South Africa"],
+    "Ásia": ["Japão", "Japan", "Coreia do Sul", "South Korea", "Korea Republic", "Irã", "Iran",
+             "IR Iran", "Austrália", "Australia", "Arábia Saudita", "Saudi Arabia", "Catar", "Qatar",
+             "Iraque", "Iraq", "Uzbequistão", "Uzbekistan", "Emirados Árabes Unidos",
+             "United Arab Emirates", "UAE", "Jordânia", "Jordan", "China", "China PR"],
+}
+
+
+def _normalizar(nome):
+    # "Japão" -> "japao", para comparar nomes sem depender de acento ou maiúscula
+    sem_acento = unicodedata.normalize("NFD", nome or "").encode("ascii", "ignore").decode()
+    return " ".join(sem_acento.lower().split())
+
+
+CONTINENTE_DA_SELECAO = {_normalizar(n): c for c, nomes in SELECOES_PRINCIPAIS.items() for n in nomes}
+
+# Abas do site em que um amistoso também aparece, conforme o continente das seleções
+ABA_DO_CONTINENTE = {"América do Sul": "América do Sul", "Europa": "Europa"}
+
+
+def _regioes_amistoso(event):
+    # Devolve as abas do jogo, ou None se nenhuma das duas seleções é principal
+    continentes = {CONTINENTE_DA_SELECAO.get(_normalizar(event[lado])) for lado in ("mandante", "visitante")}
+    continentes.discard(None)
+    if not continentes:
+        return None
+    regioes = ["Seleções"] + sorted({ABA_DO_CONTINENTE[c] for c in continentes if c in ABA_DO_CONTINENTE})
+    if {_normalizar(event["mandante"]), _normalizar(event["visitante"])} & {"brasil", "brazil"}:
+        regioes.append("Brasil")
+    return regioes
+
+
+def _erro(codigo, mensagem):
+    # Erro com o código HTTP certo: o site mostra o aviso de erro em vez de "Nenhum jogo encontrado"
+    return JSONResponse(status_code=codigo, content={"status": "erro", "dados": [], "mensagem": mensagem})
 
 # Cache em disco por (liga, dia da API), para não repetir consultas
 # e sobreviver a reinícios do servidor (o --reload reinicia a cada alteração).
@@ -163,7 +221,7 @@ def obter_jogos(data: str):
     try:
         dia = date.fromisoformat(data)
     except ValueError:
-        return {"status": "erro", "dados": [], "mensagem": "Data inválida, use AAAA-MM-DD"}
+        return _erro(400, "Data inválida, use AAAA-MM-DD")
 
     # A ESPN agrupa os jogos pelo dia de outro fuso; jogos à noite no Brasil podem
     # cair no dia seguinte, então buscamos os dois dias e filtramos pelo horário local.
@@ -178,12 +236,16 @@ def obter_jogos(data: str):
 
         eventos = {}
         falhas = 0
+        ligas_com_falha = set()
         for liga, lista in respostas:
             if lista is None:
                 falhas += 1
+                ligas_com_falha.add(LIGAS_PRINCIPAIS[liga][0])
                 continue
             for event in lista:
                 if datetime.fromtimestamp(event["startTimestamp"], BRT).date() != dia:
+                    continue
+                if liga == LIGA_AMISTOSOS and _regioes_amistoso(event) is None:
                     continue
                 eventos[event["id"]] = (liga, event)
 
@@ -192,12 +254,14 @@ def obter_jogos(data: str):
         jogos_formatados = []
         for liga, event in sorted(eventos.values(), key=lambda item: item[1]["startTimestamp"]):
             nome_liga, pais, regiao = LIGAS_PRINCIPAIS[liga]
+            regioes = _regioes_amistoso(event) if liga == LIGA_AMISTOSOS else [regiao]
             chave_jogo = " ".join(f"{data} {event['mandante']} x {event['visitante']}".lower().split())
             transmissao = canais_jogo.get(chave_jogo) or canais_campeonato.get(nome_liga) or []
             jogo = {
                 "liga": nome_liga,
                 "pais": pais,
                 "regiao": regiao,
+                "regioes": regioes,
                 "mandante": event["mandante"],
                 "visitante": event["visitante"],
                 "placarMandante": event["placarMandante"],
@@ -210,12 +274,12 @@ def obter_jogos(data: str):
             jogos_formatados.append(jogo)
 
         if falhas == len(consultas):
-            return {"status": "erro", "dados": []}
+            return _erro(503, "A fonte dos jogos (ESPN) não respondeu. Tente novamente em instantes.")
         if falhas:
             # Resultado incompleto: as ligas que falharam não entram no cache
-            return {"status": "parcial", "dados": jogos_formatados}
+            return {"status": "parcial", "dados": jogos_formatados, "ligasComFalha": sorted(ligas_com_falha)}
         return {"status": "sucesso", "dados": jogos_formatados}
 
     except Exception as e:
-        print(f"Erro interno no servidor: {str(e)}")
-        return {"status": "erro", "dados": []}
+        print(f"Erro interno no servidor: {e!r}")
+        return _erro(500, "Erro interno no servidor. Tente novamente em instantes.")

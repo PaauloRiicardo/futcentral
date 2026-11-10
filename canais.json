@@ -9,7 +9,8 @@
   "_fontes": [
     "Atualizado em 2026-10-28, temporada 2026 (Brasil) e 2026/27 (Europa).",
     "Campeonatos com lista vazia dividem os jogos entre emissoras diferentes a cada rodada; preencha esses jogos em 'jogos'.",
-    "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil)."
+    "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil).",
+    "Amistosos do Brasil em 14/11 e 17/11/2026: Imirante (09/11/2026) — Globo, SporTV e ge tv nos dois jogos."
   ],
   "campeonatos": {
     "Brasileirão Série A": ["Premiere"],
@@ -43,6 +44,8 @@
     "2026-10-28 AC Milan x Bolonha": ["ESPN4", "Disney+"],
     "2026-10-28 Venezia x Internazionale": ["SportyNet (YouTube)", "Disney+"],
     "2026-10-28 Genoa x Juventus": ["SportyNet (YouTube)", "Disney+"],
-    "2026-10-28 Bayern Munich x 1. FC Magdeburg": ["ESPN4", "Disney+"]
+    "2026-10-28 Bayern Munich x 1. FC Magdeburg": ["ESPN4", "Disney+"],
+    "2026-11-14 Japão x Brasil": ["Globo", "SporTV", "ge tv"],
+    "2026-11-17 Singapura x Brasil": ["Globo", "SporTV", "ge tv"]
   }
 }

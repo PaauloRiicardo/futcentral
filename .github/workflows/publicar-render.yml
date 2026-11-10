@@ -1,0 +1,40 @@
+# Publica o FutCentral no Render a cada push na main, chamando o Deploy Hook do Render.
+# O link do hook fica no segredo RENDER_DEPLOY_HOOK do GitHub (nunca no código):
+# Settings > Secrets and variables > Actions > New repository secret.
+name: Publicar no Render
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:                        # mudanças que não alteram o site não geram deploy
+      - "**.md"
+      - ".github/workflows/manter-acordado.yml"
+  workflow_dispatch:                     # botão "Run workflow" para publicar na hora
+
+permissions: {}                          # não precisa de acesso ao repositório
+
+concurrency:                             # dois pushes seguidos: só o último publica
+  group: publicar-render
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Avisar o Render
+        env:
+          HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::error::Segredo RENDER_DEPLOY_HOOK não cadastrado no GitHub."
+            exit 1
+          fi
+          codigo=$(curl -sS -X POST --retry 3 --retry-delay 10 --retry-all-errors --max-time 30 \
+            -o /dev/null -w "%{http_code}" "$HOOK")
+          echo "Render respondeu HTTP $codigo"
+          if [ "$codigo" -lt 200 ] || [ "$codigo" -ge 300 ]; then
+            echo "::error::O Render recusou o deploy (HTTP $codigo). Confira se o segredo tem o Deploy Hook atual."
+            exit 1
+          fi
+          echo "Deploy iniciado. Acompanhe em Events no painel do Render (leva de 2 a 5 min)."

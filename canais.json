@@ -15,72 +15,32 @@
     "Grade automática de 11/11/2026: O Povo (Jogos hoje 11/11/26), Mix Vale (Londrina x Náutico, 11/11/2026)."
   ],
   "campeonatos": {
-    "Brasileirão Série A": [
-      "Premiere"
-    ],
-    "Brasileirão Série B": [
-      "Disney+"
-    ],
+    "Brasileirão Série A": ["Premiere"],
+    "Brasileirão Série B": ["Disney+"],
     "Copa do Brasil": [],
     "Libertadores": [],
     "Sul-Americana": [],
     "Eliminatórias CONMEBOL": [],
-    "Premier League": [
-      "Disney+"
-    ],
-    "FA Cup": [
-      "Disney+"
-    ],
-    "Copa da Liga Inglesa": [
-      "Disney+"
-    ],
-    "LaLiga": [
-      "CazéTV"
-    ],
-    "Copa del Rey": [
-      "Disney+"
-    ],
-    "Serie A (Itália)": [
-      "Disney+"
-    ],
-    "Coppa Italia": [
-      "SportyNet"
-    ],
+    "Premier League": ["Disney+"],
+    "FA Cup": ["Disney+"],
+    "Copa da Liga Inglesa": ["Disney+"],
+    "LaLiga": ["CazéTV"],
+    "Copa del Rey": ["Disney+"],
+    "Serie A (Itália)": ["Disney+"],
+    "Coppa Italia": ["SportyNet"],
     "Bundesliga": [],
-    "DFB-Pokal": [
-      "Disney+"
-    ],
-    "Ligue 1": [
-      "CazéTV"
-    ],
+    "DFB-Pokal": ["Disney+"],
+    "Ligue 1": ["CazéTV"],
     "Liga Portugal": [],
-    "Champions League": [
-      "HBO Max"
-    ],
-    "Europa League": [
-      "CazéTV"
-    ],
-    "Conference League": [
-      "CazéTV"
-    ],
-    "Liga das Nações": [
-      "SporTV ou ESPN/Disney+ (varia por jogo)"
-    ],
+    "Champions League": ["HBO Max"],
+    "Europa League": ["CazéTV"],
+    "Conference League": ["CazéTV"],
+    "Liga das Nações": ["SporTV ou ESPN/Disney+ (varia por jogo)"],
     "Amistosos de Seleções": []
   },
   "jogos": {
-    "2026-11-14 Japão x Brasil": [
-      "Globo",
-      "SporTV",
-      "ge tv"
-    ],
-    "2026-11-17 Singapura x Brasil": [
-      "Globo",
-      "SporTV",
-      "ge tv"
-    ],
-    "2026-11-11 Londrina x Náutico": [
-      "Disney+"
-    ]
+    "2026-11-14 Japão x Brasil": ["Globo", "SporTV", "ge tv"],
+    "2026-11-17 Singapura x Brasil": ["Globo", "SporTV", "ge tv"],
+    "2026-11-11 Londrina x Náutico": ["Disney+"]
   }
 }

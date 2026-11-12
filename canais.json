@@ -12,7 +12,7 @@
     "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil).",
     "Amistosos do Brasil em 14/11 e 17/11/2026: Imirante (09/11/2026) — Globo, SporTV e ge tv nos dois jogos.",
     "Liga das Nações 2026/27: direitos divididos entre SporTV (Globo) e ESPN/Disney+, escala definida jogo a jogo (Imirante 24/09/2026, SBT News e Portal de Prefeitura 01/10/2026). Cadastre o canal exato em 'jogos' quando a grade do dia sair.",
-    "Grade automática de 11/11/2026: O Povo (Jogos hoje 11/11/26), Mix Vale (Londrina x Náutico, 11/11/2026)."
+    "Grade automática de 12/11/2026: O Povo (Jogos hoje 12/11/26), Bolavip (Jogos de hoje 12/11), Mantos do Futebol (Futebol hoje na TV 12/11), Folha do Leste (Jogos de hoje 12/11/2026)."
   ],
   "campeonatos": {
     "Brasileirão Série A": ["Premiere"],
@@ -41,6 +41,15 @@
   "jogos": {
     "2026-11-14 Japão x Brasil": ["Globo", "SporTV", "ge tv"],
     "2026-11-17 Singapura x Brasil": ["Globo", "SporTV", "ge tv"],
-    "2026-11-11 Londrina x Náutico": ["Disney+"]
+    "2026-11-11 Londrina x Náutico": ["Disney+"],
+    "2026-11-12 Armênia x Chipre": ["ESPN 3", "Disney+"],
+    "2026-11-12 Turquia x Bélgica": ["SporTV 2"],
+    "2026-11-12 Albania x Finlândia": ["Disney+"],
+    "2026-11-12 República Tcheca x Espanha": ["SporTV"],
+    "2026-11-12 Inglaterra x Croácia": ["ESPN 4", "Disney+"],
+    "2026-11-12 Itália x França": ["ESPN", "Disney+"],
+    "2026-11-12 Montenegro x Letônia": ["Disney+"],
+    "2026-11-12 San Marino x Bielorússia": ["Disney+"],
+    "2026-11-12 São Bernardo x Athletic": ["Premiere", "ge tv"]
   }
 }

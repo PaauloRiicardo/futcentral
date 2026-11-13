@@ -12,7 +12,7 @@
     "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil).",
     "Amistosos do Brasil em 14/11 e 17/11/2026: Imirante (09/11/2026) — Globo, SporTV e ge tv nos dois jogos.",
     "Liga das Nações 2026/27: direitos divididos entre SporTV (Globo) e ESPN/Disney+, escala definida jogo a jogo (Imirante 24/09/2026, SBT News e Portal de Prefeitura 01/10/2026). Cadastre o canal exato em 'jogos' quando a grade do dia sair.",
-    "Grade automática de 12/11/2026: O Povo (Jogos hoje 12/11/26), Bolavip (Jogos de hoje 12/11), Mantos do Futebol (Futebol hoje na TV 12/11), Folha do Leste (Jogos de hoje 12/11/2026)."
+    "Grade automática de 13/11/2026: Mantos do Futebol (Futebol hoje na TV 13/11), Bolavip (Jogos de hoje 13/11)."
   ],
   "campeonatos": {
     "Brasileirão Série A": ["Premiere"],
@@ -50,6 +50,18 @@
     "2026-11-12 Itália x França": ["ESPN", "Disney+"],
     "2026-11-12 Montenegro x Letônia": ["Disney+"],
     "2026-11-12 San Marino x Bielorússia": ["Disney+"],
-    "2026-11-12 São Bernardo x Athletic": ["Premiere", "ge tv"]
+    "2026-11-12 São Bernardo x Athletic": ["Premiere", "ge tv"],
+    "2026-11-13 Moldávia x Cazaquistão": ["ESPN 4", "Disney+"],
+    "2026-11-13 Sérvia x Alemanha": ["SporTV", "ge tv"],
+    "2026-11-13 Holanda x Grécia": ["ESPN", "Disney+"],
+    "2026-11-13 Escócia x Macedônia do Norte": ["Disney+", "YouTube ESPN Brasil"],
+    "2026-11-13 Eslovênia x Suíça": ["ESPN 4", "Disney+"],
+    "2026-11-13 Bulgária x Islândia": ["Disney+"],
+    "2026-11-13 Eslováquia x Ilhas Faroe": ["Disney+"],
+    "2026-11-13 Luxemburgo x Estonia": ["Disney+"],
+    "2026-11-13 Andorra x Gibraltar": ["Disney+"],
+    "2026-11-13 Liechtenstein x Azerbaijão": ["Disney+"],
+    "2026-11-13 Salamanca UDS x Celta de Vigo": ["ESPN 3", "Disney+"],
+    "2026-11-13 Argentina x Uruguai": ["SporTV"]
   }
 }

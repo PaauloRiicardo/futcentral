@@ -12,7 +12,7 @@
     "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil).",
     "Amistosos do Brasil em 14/11 e 17/11/2026: Imirante (09/11/2026) — Globo, SporTV e ge tv nos dois jogos.",
     "Liga das Nações 2026/27: direitos divididos entre SporTV (Globo) e ESPN/Disney+, escala definida jogo a jogo (Imirante 24/09/2026, SBT News e Portal de Prefeitura 01/10/2026). Cadastre o canal exato em 'jogos' quando a grade do dia sair.",
-    "Grade automática de 13/11/2026: Mantos do Futebol (Futebol hoje na TV 13/11), Bolavip (Jogos de hoje 13/11)."
+    "Grade automática de 14/11/2026: Bolavip (Jogos de hoje 14/11), Antena na TV (Agenda esportiva de sábado 14/11), Folha do Leste (Jogos de hoje 14/11), Olhar Digital (última rodada da Série B, 14/11)."
   ],
   "campeonatos": {
     "Brasileirão Série A": ["Premiere"],
@@ -62,6 +62,21 @@
     "2026-11-13 Andorra x Gibraltar": ["Disney+"],
     "2026-11-13 Liechtenstein x Azerbaijão": ["Disney+"],
     "2026-11-13 Salamanca UDS x Celta de Vigo": ["ESPN 3", "Disney+"],
-    "2026-11-13 Argentina x Uruguai": ["SporTV"]
+    "2026-11-13 Argentina x Uruguai": ["SporTV"],
+    "2026-11-14 Kosovo x Israel": ["ESPN"],
+    "2026-11-14 Georgia x Hungria": ["SporTV"],
+    "2026-11-14 Noruega x País de Gales": ["ESPN"],
+    "2026-11-14 Áustria x Irlanda": ["Disney+"],
+    "2026-11-14 Irlanda do Norte x Ucrânia": ["Disney+"],
+    "2026-11-14 Portugal x Dinamarca": ["SporTV"],
+    "2026-11-14 Romênia x Polônia": ["Disney+"],
+    "2026-11-14 Suécia x Bósnia e Herzegovina": ["ESPN 3"],
+    "2026-11-14 América Mineiro x Avaí": ["SportyNet", "Disney+"],
+    "2026-11-14 CRB x Ceará": ["RedeTV!", "SportyNet", "Disney+"],
+    "2026-11-14 Criciúma x Novorizontino": ["ESPN 4", "Disney+"],
+    "2026-11-14 Fortaleza x Vila Nova": ["ESPN", "Disney+"],
+    "2026-11-14 Juventude x Botafogo-SP": ["ESPN 2", "Goat", "Disney+"],
+    "2026-11-14 Mirassol x Atlético-MG": ["Amazon Prime Video"],
+    "2026-11-14 Chapecoense x Vasco da Gama": ["Premiere"]
   }
 }

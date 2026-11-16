@@ -12,7 +12,7 @@
     "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil).",
     "Amistosos do Brasil em 14/11 e 17/11/2026: Imirante (09/11/2026) — Globo, SporTV e ge tv nos dois jogos.",
     "Liga das Nações 2026/27: direitos divididos entre SporTV (Globo) e ESPN/Disney+, escala definida jogo a jogo (Imirante 24/09/2026, SBT News e Portal de Prefeitura 01/10/2026). Cadastre o canal exato em 'jogos' quando a grade do dia sair.",
-    "Grade automática de 15/11/2026: O Povo (jogos de hoje 15/11), Bolavip Brasil (jogos de hoje 15/11), aRede (futebol de seleções 15/11), Antenados na TV e Streaming (agenda 15/11)."
+    "Grade automática de 16/11/2026: Bolavip Brasil (jogos de hoje 16/11), O Povo (jogos hoje 16/11), Lance! (jogos de hoje 16/11), Antenados na TV e Streaming (agenda 16/11)."
   ],
   "campeonatos": {
     "Brasileirão Série A": ["Premiere"],
@@ -85,6 +85,16 @@
     "2026-11-15 Bélgica x Itália": ["ESPN", "Disney+"],
     "2026-11-15 Croácia x República Tcheca": ["Disney+"],
     "2026-11-15 França x Turquia": ["SporTV 3", "ge tv"],
-    "2026-11-15 Espanha x Inglaterra": ["SporTV"]
+    "2026-11-15 Espanha x Inglaterra": ["SporTV"],
+    "2026-11-16 Ilhas Faroe x Moldávia": ["SporTV 2"],
+    "2026-11-16 Cazaquistão x Eslováquia": ["ESPN 4"],
+    "2026-11-16 Estonia x Bulgária": ["SporTV 2"],
+    "2026-11-16 Islândia x Luxemburgo": ["ESPN 4"],
+    "2026-11-16 Lituânia x Liechtenstein": ["Disney+"],
+    "2026-11-16 Alemanha x Holanda": ["ESPN", "Disney+"],
+    "2026-11-16 Gibraltar x Malta": ["Disney+"],
+    "2026-11-16 Grécia x Sérvia": ["SporTV"],
+    "2026-11-16 Macedônia do Norte x Eslovênia": ["Disney+"],
+    "2026-11-16 Suíça x Escócia": ["ESPN 4", "Disney+"]
   }
 }

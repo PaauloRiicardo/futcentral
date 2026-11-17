@@ -10,6 +10,7 @@ on:
       - "**.md"
       - ".github/workflows/manter-acordado.yml"
       - ".github/workflows/listar-jogos.yml"
+      - ".github/workflows/medir-site.yml"
   workflow_dispatch:                     # botão "Run workflow" para publicar na hora
 
 permissions: {}                          # não precisa de acesso ao repositório

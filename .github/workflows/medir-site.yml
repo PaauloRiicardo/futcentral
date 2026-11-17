@@ -1,0 +1,38 @@
+# Mede o site no ar com o Lighthouse (mesma ferramenta do PageSpeed Insights do Google):
+# desempenho, acessibilidade, boas práticas e SEO, no celular e no computador.
+# Rode em Actions > Medir site > Run workflow; o resumo aparece na página da execução.
+name: Medir site
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        dispositivo: [celular, computador]
+    steps:
+      - name: Acordar o site
+        run: curl -fsS --retry 5 --retry-delay 15 --retry-all-errors --max-time 90 -o /dev/null https://futcentral.onrender.com/
+
+      - name: Rodar o Lighthouse
+        env:
+          DISPOSITIVO: ${{ matrix.dispositivo }}
+        run: |
+          EXTRA=""
+          [ "$DISPOSITIVO" = "computador" ] && EXTRA="--preset=desktop"
+          npx --yes lighthouse@12 https://futcentral.onrender.com/ $EXTRA \
+            --output=json --output-path=relatorio.json --quiet \
+            --chrome-flags="--headless=new --no-sandbox"
+          jq -r --arg d "$DISPOSITIVO" '
+            "NOTAS|\($d)|" + ([.categories[] | "\(.title)=\((.score*100)|round)"] | join(" ")),
+            (["first-contentful-paint","largest-contentful-paint","total-blocking-time","cumulative-layout-shift","speed-index","interactive","total-byte-weight","server-response-time"][] as $k
+              | .audits[$k] | "METRICA|\($d)|\(.title)|\(.displayValue // "-")"),
+            (.audits | to_entries[] | select(.value.score != null and .value.score < 0.9 and .value.scoreDisplayMode != "informative" and .value.scoreDisplayMode != "notApplicable" and .value.scoreDisplayMode != "manual")
+              | "FALHA|\($d)|\(.key)|\(.value.title)|\(.value.displayValue // "")")
+          ' relatorio.json | tee resumo.txt
+          { echo "### Lighthouse ($DISPOSITIVO)"; echo '```'; cat resumo.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"

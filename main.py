@@ -170,7 +170,7 @@ _cache_lock = Lock()
 
 # Mude a versão sempre que _resumir_evento passar a guardar campos diferentes:
 # as entradas antigas são descartadas em vez de quebrar a resposta.
-CACHE_VERSAO = "v2"
+CACHE_VERSAO = "v3"
 
 
 def _ler_cache():
@@ -208,11 +208,42 @@ def _ler_canais():
     return dados.get("campeonatos", {}), jogos
 
 
+def _resumir_lances(competicao, lado_do_time):
+    # Gols e cartões vermelhos do jogo, na ordem em que aconteceram.
+    # A ESPN coloca o gol contra no time que se beneficiou, que é onde ele aparece no placar.
+    lances = []
+    for detalhe in competicao.get("details") or []:
+        if detalhe.get("scoringPlay"):
+            tipo = "gol"
+        elif detalhe.get("redCard"):
+            tipo = "vermelho"
+        else:
+            continue  # cartões amarelos e substituições não entram
+        lado = lado_do_time.get(str(detalhe.get("team", {}).get("id")))
+        if not lado:
+            continue
+        jogadores = detalhe.get("athletesInvolved") or [{}]
+        if tipo == "vermelho" and not jogadores[0].get("displayName"):
+            continue  # a ESPN às vezes repete o vermelho sem o nome do jogador
+        lances.append({
+            "tipo": tipo,
+            "lado": lado,
+            "jogador": jogadores[0].get("displayName") or "",
+            "minuto": detalhe.get("clock", {}).get("displayValue", ""),
+            "penalti": bool(detalhe.get("penaltyKick")) and tipo == "gol",
+            "contra": bool(detalhe.get("ownGoal")) and tipo == "gol",
+        })
+    return lances
+
+
 def _resumir_evento(event):
     # Guarda só o que o site usa, para o arquivo de cache não ficar enorme
-    competidores = event.get("competitions", [{}])[0].get("competitors", [])
+    competicao = event.get("competitions", [{}])[0]
+    competidores = competicao.get("competitors", [])
     times = {c.get("homeAway"): c.get("team", {}).get("displayName") for c in competidores}
     placar = {c.get("homeAway"): c.get("score") for c in competidores}
+    lado_do_time = {str(c.get("team", {}).get("id")): ("mandante" if c.get("homeAway") == "home" else "visitante")
+                    for c in competidores}
     status = event.get("status", {}).get("type", {})
     return {
         "id": event.get("id"),
@@ -224,6 +255,7 @@ def _resumir_evento(event):
         # "pre" = não começou, "in" = em andamento, "post" = encerrado
         "estado": status.get("state", "pre"),
         "status": status.get("description", "Agendado"),
+        "lances": _resumir_lances(competicao, lado_do_time),
     }
 
 
@@ -310,7 +342,8 @@ def obter_jogos(data: str):
                 "estado": event["estado"],
                 "horario": datetime.fromtimestamp(event["startTimestamp"], BRT).strftime('%H:%M'),
                 "status": event["status"],
-                "transmissao": transmissao
+                "transmissao": transmissao,
+                "lances": event.get("lances", []),
             }
             jogos_formatados.append(jogo)
 

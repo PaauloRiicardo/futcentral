@@ -202,6 +202,38 @@
       }
     }
 
+    // Gols e cartões vermelhos abaixo de cada time: "Bruno Duarte 36', 81'"
+    // (o mesmo jogador fica numa linha só; pênalti e gol contra aparecem entre parênteses)
+    const ICONE_LANCE = {
+      gol: '<i class="fa-solid fa-futbol text-gray-400 text-[11px]" title="Gol"></i>',
+      vermelho: '<span class="inline-block w-2 h-3 bg-red-500 rounded-sm align-[-1px]" title="Cartão vermelho"></span>',
+    };
+
+    function montarLances(lances) {
+      if (!lances || lances.length === 0) return '';
+      const colunas = { mandante: [], visitante: [] };
+      const grupos = new Map();
+      lances.forEach(l => {
+        const chave = `${l.lado}|${l.tipo}|${l.jogador}`;
+        const minuto = l.minuto + (l.penalti ? ' (pên.)' : '') + (l.contra ? ' (contra)' : '');
+        if (grupos.has(chave)) { grupos.get(chave).minutos.push(minuto); return; }
+        const grupo = { ...l, minutos: [minuto] };
+        grupos.set(chave, grupo);
+        (colunas[l.lado] || []).push(grupo);
+      });
+      const linha = (g, lado) => {
+        const texto = `${esc(g.jogador || 'Não informado')} <span class="text-gray-500 whitespace-nowrap">${esc(g.minutos.join(', '))}</span>`;
+        return lado === 'mandante'
+          ? `<li class="flex items-center justify-end gap-1.5"><span>${texto}</span>${ICONE_LANCE[g.tipo]}</li>`
+          : `<li class="flex items-center gap-1.5">${ICONE_LANCE[g.tipo]}<span>${texto}</span></li>`;
+      };
+      return `
+          <div class="grid grid-cols-2 gap-x-6 text-xs text-gray-300 -mt-1 pb-1">
+            <ul class="space-y-0.5 text-right">${colunas.mandante.map(g => linha(g, 'mandante')).join('')}</ul>
+            <ul class="space-y-0.5">${colunas.visitante.map(g => linha(g, 'visitante')).join('')}</ul>
+          </div>`;
+    }
+
     function renderizarJogos(lista) {
       const container = document.getElementById('container-jogos');
       container.innerHTML = '';
@@ -232,6 +264,7 @@
           ? `<div class="px-4 text-xl font-black tabular-nums ${jogo.estado === 'in' ? 'text-green-400' : 'text-white'}">${esc(jogo.placarMandante)} <span class="text-gray-500">x</span> ${esc(jogo.placarVisitante)}</div>`
           : `<div class="px-4 text-xs font-black text-gray-500 uppercase">VS</div>`;
         const statusClasse = jogo.estado === 'in' ? 'bg-green-500/15 text-green-400' : 'bg-gray-800 text-gray-300';
+        const lancesHtml = temPlacar ? montarLances(jogo.lances) : '';
 
         card.innerHTML = `
           <div class="flex justify-between items-center border-b border-gray-800 pb-2">
@@ -244,6 +277,7 @@
             ${meioHtml}
             <div class="flex-1 text-left font-bold text-base text-gray-100">${esc(jogo.visitante)}</div>
           </div>
+          ${lancesHtml}
 
           <div class="flex items-center justify-between pt-2 border-t border-gray-800/60 text-xs">
             <span class="text-gray-400 flex items-center gap-1.5">

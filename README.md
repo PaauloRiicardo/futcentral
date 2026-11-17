@@ -9,6 +9,7 @@ Jogos de futebol do dia dos principais campeonatos do Brasil, da América do Sul
 - Lista os jogos de qualquer data, com busca por time ou campeonato
 - Abas **Brasil**, **América do Sul**, **Europa** e **Seleções**
 - Mostra o placar durante e depois do jogo e o atualiza sozinho a cada 60 s quando a data é hoje ou há jogo em andamento (pausa com a aba do navegador escondida)
+- Mostra quem fez os gols (com pênalti e gol contra) e quem levou cartão vermelho, embaixo de cada time
 - Mostra os canais de TV e streaming de cada jogo, cadastrados à mão
 - Avisa quando a fonte dos dados falha, em vez de mostrar "Nenhum jogo encontrado"
 
@@ -90,7 +91,7 @@ O WhatsApp e o Facebook guardam a prévia por alguns dias. Para forçar a atuali
 | `503` | A ESPN não respondeu em nenhum campeonato |
 | `500` | Erro interno |
 
-Cada jogo traz `liga`, `pais`, `regiao`, `regioes` (abas em que aparece), `mandante`, `visitante`, `placarMandante`, `placarVisitante`, `estado` (`pre`, `in` ou `post`), `horario` (Brasília), `status` e `transmissao`.
+Cada jogo traz `liga`, `pais`, `regiao`, `regioes` (abas em que aparece), `mandante`, `visitante`, `placarMandante`, `placarVisitante`, `estado` (`pre`, `in` ou `post`), `horario` (Brasília), `status`, `transmissao` e `lances` (gols e cartões vermelhos: `tipo` `gol`/`vermelho`, `lado` `mandante`/`visitante`, `jogador`, `minuto`, `penalti`, `contra`; o gol contra fica no lado do time que ganhou o gol).
 
 ## Publicar
 

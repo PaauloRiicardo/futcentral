@@ -30,8 +30,9 @@
   <meta name="twitter:title" content="FutCentral – Jogos de hoje, placar ao vivo e onde assistir">
   <meta name="twitter:description" content="Todos os jogos do dia no horário de Brasília, com placar ao vivo e os canais para assistir no Brasil.">
   <meta name="twitter:image" content="https://futcentral.onrender.com/static/og.jpg?v=2">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- CSS gerado pelo Tailwind 3 a partir desta página (feito no GitHub a cada publicação; ver .github/workflows/publicar-render.yml).
+       O ?v= muda sozinho quando o CSS muda, para o navegador não usar a versão antiga. -->
+  <link rel="stylesheet" href="/static/site.css?v=inicial">
 </head>
 <body class="bg-gray-950 text-gray-100 font-sans min-h-screen flex flex-col">
 
@@ -40,7 +41,7 @@
     <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
       <div class="flex items-center space-x-3">
         <div class="bg-green-500 text-gray-950 p-2 rounded-xl font-bold">
-          <i class="fa-solid fa-futbol text-xl"></i>
+          <svg class="block w-5 h-5" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M417.3 360.1l-71.6-4.8c-5.2-.3-10.3 1.1-14.5 4.2s-7.2 7.4-8.4 12.5l-17.6 69.6C289.5 445.8 273 448 256 448s-33.5-2.2-49.2-6.4L189.2 372c-1.3-5-4.3-9.4-8.4-12.5s-9.3-4.5-14.5-4.2l-71.6 4.8c-17.6-27.2-28.5-59.2-30.4-93.6L125 228.3c4.4-2.8 7.6-7 9.2-11.9s1.4-10.2-.5-15l-26.7-66.6C128 109.2 155.3 89 186.7 76.9l55.2 46c4 3.3 9 5.1 14.1 5.1s10.2-1.8 14.1-5.1l55.2-46c31.3 12.1 58.7 32.3 79.6 57.9l-26.7 66.6c-1.9 4.8-2.1 10.1-.5 15s4.9 9.1 9.2 11.9l60.7 38.2c-1.9 34.4-12.8 66.4-30.4 93.6zM256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zm14.1-325.7c-8.4-6.1-19.8-6.1-28.2 0L194 221c-8.4 6.1-11.9 16.9-8.7 26.8l18.3 56.3c3.2 9.9 12.4 16.6 22.8 16.6l59.2 0c10.4 0 19.6-6.7 22.8-16.6l18.3-56.3c3.2-9.9-.3-20.7-8.7-26.8l-47.9-34.8z"/></svg>
         </div>
         <h1 class="text-xl font-extrabold tracking-wide text-white">Fut<span class="text-green-400">Central</span></h1>
       </div>
@@ -56,10 +57,12 @@
     <div class="max-w-6xl mx-auto px-4 py-4 space-y-3">
       <div class="flex flex-col sm:flex-row justify-between gap-3">
         <div class="relative flex-1">
-          <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400"></i>
-          <input type="text" id="searchInput" placeholder="Buscar time ou liga..." 
+          <svg class="absolute left-3 top-[11px] w-3.5 h-3.5 text-gray-400" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376C296.3 401.1 253.9 416 208 416 93.1 416 0 322.9 0 208S93.1 0 208 0 416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+          <label for="searchInput" class="sr-only">Buscar time ou liga</label>
+          <input type="search" id="searchInput" placeholder="Buscar time ou liga..." 
             class="w-full pl-9 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm focus:outline-none focus:border-green-500 text-white placeholder-gray-400">
         </div>
+        <label for="dateInput" class="sr-only">Data dos jogos</label>
         <input type="date" id="dateInput" onchange="carregarJogosData(this.value)" 
           class="bg-gray-800 border border-gray-700 text-sm rounded-lg px-3 py-2 text-white focus:outline-none focus:border-green-500">
       </div>
@@ -77,14 +80,28 @@
   <!-- Conteúdo Principal -->
   <main class="max-w-6xl mx-auto px-4 py-6 flex-1 w-full">
     <div id="aviso" class="hidden mb-4 bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 text-sm rounded-lg px-4 py-3"></div>
-    <div id="container-jogos" class="space-y-4"></div>
+    <div id="container-jogos" class="space-y-4 min-h-[70vh]" aria-live="polite" aria-busy="true">
+      <!-- Cards fantasma enquanto os jogos carregam (mesmo tamanho dos cards reais) -->
+      <div class="card-fantasma"></div><div class="card-fantasma"></div><div class="card-fantasma"></div>
+    </div>
   </main>
 
-  <footer class="bg-gray-900 border-t border-gray-800 text-center text-xs text-gray-500 py-4">
+  <footer class="bg-gray-900 border-t border-gray-800 text-center text-xs text-gray-400 py-4">
     <p>FutCentral © 2026 - Onde assistir aos principais campeonatos do mundo.</p>
   </footer>
 
   <script>
+    // Ícones do Font Awesome Free (CC BY 4.0, fontawesome.com) embutidos como SVG:
+    // a página não baixa mais a biblioteca inteira só para usar 7 ícones.
+    const ICONES = {"futbol": {"vb": "0 0 512 512", "d": "M417.3 360.1l-71.6-4.8c-5.2-.3-10.3 1.1-14.5 4.2s-7.2 7.4-8.4 12.5l-17.6 69.6C289.5 445.8 273 448 256 448s-33.5-2.2-49.2-6.4L189.2 372c-1.3-5-4.3-9.4-8.4-12.5s-9.3-4.5-14.5-4.2l-71.6 4.8c-17.6-27.2-28.5-59.2-30.4-93.6L125 228.3c4.4-2.8 7.6-7 9.2-11.9s1.4-10.2-.5-15l-26.7-66.6C128 109.2 155.3 89 186.7 76.9l55.2 46c4 3.3 9 5.1 14.1 5.1s10.2-1.8 14.1-5.1l55.2-46c31.3 12.1 58.7 32.3 79.6 57.9l-26.7 66.6c-1.9 4.8-2.1 10.1-.5 15s4.9 9.1 9.2 11.9l60.7 38.2c-1.9 34.4-12.8 66.4-30.4 93.6zM256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zm14.1-325.7c-8.4-6.1-19.8-6.1-28.2 0L194 221c-8.4 6.1-11.9 16.9-8.7 26.8l18.3 56.3c3.2 9.9 12.4 16.6 22.8 16.6l59.2 0c10.4 0 19.6-6.7 22.8-16.6l18.3-56.3c3.2-9.9-.3-20.7-8.7-26.8l-47.9-34.8z"}, "magnifying-glass": {"vb": "0 0 512 512", "d": "M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376C296.3 401.1 253.9 416 208 416 93.1 416 0 322.9 0 208S93.1 0 208 0 416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"}, "calendar-xmark": {"vb": "0 0 448 512", "d": "M128 0c17.7 0 32 14.3 32 32l0 32 128 0 0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 32 0c35.3 0 64 28.7 64 64l0 288c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 128C0 92.7 28.7 64 64 64l32 0 0-32c0-17.7 14.3-32 32-32zM291.9 220.1c-9.4-9.4-24.6-9.4-33.9 0l-33.9 33.9-33.9-33.9c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l33.9 33.9-33.9 33.9c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l33.9-33.9 33.9 33.9c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-33.9-33.9 33.9-33.9c9.4-9.4 9.4-24.6 0-33.9z"}, "circle-exclamation": {"vb": "0 0 512 512", "d": "M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zm0-192a32 32 0 1 0 0 64 32 32 0 1 0 0-64zm0-192c-18.2 0-32.7 15.5-31.4 33.7l7.4 104c.9 12.6 11.4 22.3 23.9 22.3 12.6 0 23-9.7 23.9-22.3l7.4-104c1.3-18.2-13.1-33.7-31.4-33.7z"}, "rotate-right": {"vb": "0 0 512 512", "d": "M488 192l-144 0c-9.7 0-18.5-5.8-22.2-14.8s-1.7-19.3 5.2-26.2l46.7-46.7c-75.3-58.6-184.3-53.3-253.5 15.9-75 75-75 196.5 0 271.5s196.5 75 271.5 0c8.2-8.2 15.5-16.9 21.9-26.1 10.1-14.5 30.1-18 44.6-7.9s18 30.1 7.9 44.6c-8.5 12.2-18.2 23.8-29.1 34.7-100 100-262.1 100-362 0S-25 175 75 75c94.3-94.3 243.7-99.6 344.3-16.2L471 7c6.9-6.9 17.2-8.9 26.2-5.2S512 14.3 512 24l0 144c0 13.3-10.7 24-24 24z"}, "triangle-exclamation": {"vb": "0 0 512 512", "d": "M256 0c14.7 0 28.2 8.1 35.2 21l216 400c6.7 12.4 6.4 27.4-.8 39.5S486.1 480 472 480L40 480c-14.1 0-27.2-7.4-34.4-19.5s-7.5-27.1-.8-39.5l216-400c7-12.9 20.5-21 35.2-21zm0 352a32 32 0 1 0 0 64 32 32 0 1 0 0-64zm0-192c-18.2 0-32.7 15.5-31.4 33.7l7.4 104c.9 12.5 11.4 22.3 23.9 22.3 12.6 0 23-9.7 23.9-22.3l7.4-104c1.3-18.2-13.1-33.7-31.4-33.7z"}, "tv": {"vb": "0 0 576 512", "d": "M64 96l0 240 448 0 0-240-448 0zM0 96C0 60.7 28.7 32 64 32l448 0c35.3 0 64 28.7 64 64l0 240c0 35.3-28.7 64-64 64L64 400c-35.3 0-64-28.7-64-64L0 96zM160 448l256 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-256 0c-17.7 0-32-14.3-32-32s14.3-32 32-32z"}};
+    function icone(nome, classes = '') {
+      const i = ICONES[nome];
+      return `<svg class="inline-block w-[1em] h-[1em] align-[-0.125em] ${classes}" viewBox="${i.vb}" fill="currentColor" aria-hidden="true"><path d="${i.d}"/></svg>`;
+    }
+
+    // Cards fantasma: ocupam o mesmo espaço dos cards reais enquanto a lista carrega
+    const CARDS_FANTASMA = '<div class="card-fantasma"></div>'.repeat(3);
+
     // Aberto pelo servidor, usa o mesmo endereço; aberto direto do arquivo, usa o backend local
     const API_BASE = location.protocol === 'file:' ? 'http://127.0.0.1:8000' : '';
 
@@ -148,11 +165,8 @@
       const container = document.getElementById('container-jogos');
       const aviso = document.getElementById('aviso');
       if (!silencioso) {
-        container.innerHTML = `
-          <div class="text-center py-12 text-gray-400">
-            <i class="fa-solid fa-spinner fa-spin text-3xl mb-2 text-green-400"></i>
-            <p>Carregando partidas em tempo real...</p>
-          </div>`;
+        container.innerHTML = CARDS_FANTASMA;
+        container.setAttribute('aria-busy', 'true');
         aviso.classList.add('hidden');
       }
 
@@ -170,7 +184,7 @@
         // Algumas ligas falharam: mostra o que veio e avisa que pode faltar jogo
         if (resultado.status === 'parcial') {
           const ligas = (resultado.ligasComFalha || []).join(', ');
-          aviso.innerHTML = `<i class="fa-solid fa-circle-exclamation mr-1"></i> Alguns campeonatos não carregaram${ligas ? ` (${esc(ligas)})` : ''}. A lista pode estar incompleta. <button onclick="carregarJogosDoBackend(document.getElementById('dateInput').value)" class="underline font-semibold ml-1">Recarregar</button>`;
+          aviso.innerHTML = `${icone('circle-exclamation', 'mr-1')} Alguns campeonatos não carregaram${ligas ? ` (${esc(ligas)})` : ''}. A lista pode estar incompleta. <button onclick="carregarJogosDoBackend(document.getElementById('dateInput').value)" class="underline font-semibold ml-1">Recarregar</button>`;
           aviso.classList.remove('hidden');
         } else {
           aviso.classList.add('hidden');
@@ -183,17 +197,18 @@
       } catch (erro) {
         if (minhaRequisicao !== requisicaoAtual) return;
         console.error("Erro ao carregar os jogos:", erro);
+        container.setAttribute('aria-busy', 'false');
         atualizarSelo(data, false);
         // Falha numa atualização automática: mantém os placares que já estão na tela
         if (silencioso && jogosDoDia.length) return;
         jogosDoDia = [];
         container.innerHTML = `
           <div class="text-center py-12 text-red-400">
-            <i class="fa-solid fa-triangle-exclamation text-3xl mb-2"></i>
+            ${icone('triangle-exclamation', 'text-3xl mb-2')}
             <p>${esc(erro.message && !erro.message.startsWith('Failed') ? erro.message : 'Não foi possível carregar os jogos. Tente novamente em instantes.')}</p>
             <button onclick="carregarJogosDoBackend(document.getElementById('dateInput').value)"
               class="mt-4 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-200 rounded-lg text-sm">
-              <i class="fa-solid fa-rotate-right mr-1"></i> Tentar novamente
+              ${icone('rotate-right', 'mr-1')} Tentar novamente
             </button>
           </div>`;
       } finally {
@@ -205,7 +220,7 @@
     // Gols e cartões vermelhos abaixo de cada time: "Bruno Duarte 36', 81'"
     // (o mesmo jogador fica numa linha só; pênalti e gol contra aparecem entre parênteses)
     const ICONE_LANCE = {
-      gol: '<i class="fa-solid fa-futbol text-gray-400 text-[11px]" title="Gol"></i>',
+      gol: icone('futbol', 'text-gray-400 text-[11px]'),
       vermelho: '<span class="inline-block w-2 h-3 bg-red-500 rounded-sm align-[-1px]" title="Cartão vermelho"></span>',
     };
 
@@ -222,7 +237,7 @@
         (colunas[l.lado] || []).push(grupo);
       });
       const linha = (g, lado) => {
-        const texto = `${esc(g.jogador || 'Não informado')} <span class="text-gray-500 whitespace-nowrap">${esc(g.minutos.join(', '))}</span>`;
+        const texto = `${esc(g.jogador || 'Não informado')} <span class="text-gray-400 whitespace-nowrap">${esc(g.minutos.join(', '))}</span>`;
         return lado === 'mandante'
           ? `<li class="flex items-center justify-end gap-1.5"><span>${texto}</span>${ICONE_LANCE[g.tipo]}</li>`
           : `<li class="flex items-center gap-1.5">${ICONE_LANCE[g.tipo]}<span>${texto}</span></li>`;
@@ -237,11 +252,12 @@
     function renderizarJogos(lista) {
       const container = document.getElementById('container-jogos');
       container.innerHTML = '';
+      container.setAttribute('aria-busy', 'false');
 
       if (!lista || lista.length === 0) {
         container.innerHTML = `
-          <div class="text-center py-12 text-gray-500">
-            <i class="fa-solid fa-calendar-xmark text-4xl mb-3"></i>
+          <div class="text-center py-12 text-gray-400">
+            ${icone('calendar-xmark', 'text-4xl mb-3')}
             <p>Nenhum jogo encontrado para esta data ou filtro.</p>
           </div>`;
         return;
@@ -256,13 +272,13 @@
           ? canais.map(canal =>
               `<span class="bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded text-xs font-semibold">${esc(canal)}</span>`
             ).join(' ')
-          : `<span class="text-gray-500 italic">Transmissão a confirmar</span>`;
+          : `<span class="text-gray-400 italic">Transmissão a confirmar</span>`;
 
         // Antes do jogo mostra "VS"; durante e depois, o placar
         const temPlacar = jogo.estado !== 'pre' && jogo.placarMandante != null && jogo.placarVisitante != null;
         const meioHtml = temPlacar
-          ? `<div class="px-4 text-xl font-black tabular-nums ${jogo.estado === 'in' ? 'text-green-400' : 'text-white'}">${esc(jogo.placarMandante)} <span class="text-gray-500">x</span> ${esc(jogo.placarVisitante)}</div>`
-          : `<div class="px-4 text-xs font-black text-gray-500 uppercase">VS</div>`;
+          ? `<div class="px-4 text-xl font-black tabular-nums ${jogo.estado === 'in' ? 'text-green-400' : 'text-white'}">${esc(jogo.placarMandante)} <span class="text-gray-400">x</span> ${esc(jogo.placarVisitante)}</div>`
+          : `<div class="px-4 text-xs font-black text-gray-400 uppercase">VS</div>`;
         const statusClasse = jogo.estado === 'in' ? 'bg-green-500/15 text-green-400' : 'bg-gray-800 text-gray-300';
         const lancesHtml = temPlacar ? montarLances(jogo.lances) : '';
 
@@ -281,7 +297,7 @@
 
           <div class="flex items-center justify-between pt-2 border-t border-gray-800/60 text-xs">
             <span class="text-gray-400 flex items-center gap-1.5">
-              <i class="fa-solid fa-tv text-gray-500"></i> Onde assistir:
+              ${icone('tv', 'text-gray-400')} Onde assistir:
             </span>
             <div class="flex gap-1.5 flex-wrap justify-end">
               ${canaisHtml}

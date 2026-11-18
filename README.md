@@ -18,7 +18,7 @@ Jogos de futebol do dia dos principais campeonatos do Brasil, da América do Sul
 | Parte | Tecnologia |
 |---|---|
 | Backend | Python 3.13 · FastAPI · Uvicorn · requests |
-| Frontend | Um arquivo HTML com Tailwind (CDN), Font Awesome e JavaScript puro |
+| Frontend | Um arquivo HTML com JavaScript puro; CSS do Tailwind 3 gerado no GitHub (`static/site.css`) e ícones do Font Awesome embutidos como SVG |
 | Dados | API pública da ESPN (sem chave) |
 | Hospedagem | Render, plano gratuito |
 | Automação | GitHub Actions: deploy a cada push e monitor que mantém o site acordado |
@@ -48,6 +48,8 @@ uv pip install -r requirements.txt
 | `main.py` | API: `GET /` entrega o site; `GET /api/jogos?data=AAAA-MM-DD` devolve os jogos |
 | `site_esportivo.html` | A página: filtros, cards dos jogos, atualização automática |
 | `canais.json` | Onde assistir: canais padrão por campeonato e canais de jogos específicos |
+| `estilos/entrada.css` | Entrada do Tailwind (e o estilo dos cards fantasma). O CSS final `static/site.css` é gerado no GitHub a cada publicação — não edite à mão |
+| `.github/workflows/medir-site.yml` | Mede o site no ar com o Lighthouse (Actions → Medir site → Run workflow) |
 | `static/` | `og.jpg` (imagem da prévia ao compartilhar o link, 1200×630) e os ícones do site |
 | `render.yaml` | Configuração do serviço no Render |
 | `.github/workflows/publicar-render.yml` | Publica no Render a cada push na `main` |
@@ -107,10 +109,16 @@ O GitHub Actions avisa o Render, que publica em 1 a 5 minutos. Acompanhe em **Ac
 - O Auto-Deploy do Render fica desligado (**Off**) para não publicar duas vezes.
 - Para publicar sem fazer um push novo, use **Actions → Publicar no Render → Run workflow**.
 
+## CSS e desempenho
+- O Tailwind não vem mais do CDN. A cada publicação, o GitHub gera `static/site.css` só com as classes que a página usa e salva no repositório (commit "CSS gerado (automático)").
+- Rodando no PC, a página usa o `static/site.css` da última publicação: uma classe nova do Tailwind só ganha estilo depois do push. Para gerar na hora (precisa de Node): `npx tailwindcss@3.4.17 -i estilos/entrada.css -o static/site.css --content site_esportivo.html --minify`.
+- As respostas são compactadas (GZip) e, no Render, uma tarefa de fundo deixa os jogos de hoje e de amanhã prontos no cache a cada 4 min.
+
 ## Cache
 
 - Guardado em memória e em `.cache/espn.json`. Essa pasta fica fora do Git e é apagada a cada deploy no Render.
-- Dias que já passaram ficam guardados para sempre. Hoje, por 60 s. Dias futuros, por 3 h.
+- Dias que já passaram ficam guardados para sempre. Dias futuros, por 3 h. Hoje, conforme cada campeonato: 60 s se tem jogo rolando ou começando em até 15 min, 10 min se ainda vai ter jogo, 6 h se já acabou tudo.
+- Se a ESPN não responder, o site usa os últimos dados guardados daquele campeonato.
 - Se mudar os campos que o servidor guarda de cada jogo, troque o `CACHE_VERSAO` em `main.py` para descartar o cache antigo.
 
 ## Limitações conhecidas

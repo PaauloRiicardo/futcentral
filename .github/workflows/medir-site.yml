@@ -36,3 +36,10 @@ jobs:
               | "FALHA|\($d)|\(.key)|\(.value.title)|\(.value.displayValue // "")")
           ' relatorio.json | tee resumo.txt
           { echo "### Lighthouse ($DISPOSITIVO)"; echo '```'; cat resumo.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Guardar o relatório completo
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-${{ matrix.dispositivo }}
+          path: relatorio.json
+          retention-days: 14

@@ -13,7 +13,8 @@ on:
       - ".github/workflows/medir-site.yml"
   workflow_dispatch:                     # botão "Run workflow" para publicar na hora
 
-permissions: {}                          # não precisa de acesso ao repositório
+permissions:
+  contents: write                        # para salvar o CSS gerado no repositório
 
 concurrency:                             # dois pushes seguidos: só o último publica
   group: publicar-render
@@ -22,8 +23,31 @@ concurrency:                             # dois pushes seguidos: só o último p
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 6
     steps:
+      - uses: actions/checkout@v4
+
+      # Gera static/site.css só com as classes do Tailwind que a página usa (poucos KB),
+      # no lugar do Tailwind pelo CDN, que travava a página ~1,6 s no celular.
+      - name: Gerar CSS (Tailwind 3)
+        run: |
+          npx --yes tailwindcss@3.4.17 -i estilos/entrada.css -o static/site.css --content site_esportivo.html --minify
+          VERSAO=$(sha256sum static/site.css | cut -c1-10)
+          sed -i -E "s#/static/site\.css\?v=[A-Za-z0-9]+#/static/site.css?v=$VERSAO#" site_esportivo.html
+          echo "CSS: $(wc -c < static/site.css) bytes, versão $VERSAO"
+
+      - name: Salvar o CSS no repositório (se mudou)
+        run: |
+          if git diff --quiet -- static/site.css site_esportivo.html && [ -z "$(git status --porcelain -- static/site.css)" ]; then
+            echo "CSS sem mudança."; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add static/site.css site_esportivo.html
+          git commit -m "CSS gerado (automático)"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
       - name: Avisar o Render
         env:
           HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}

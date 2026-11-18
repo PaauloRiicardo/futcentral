@@ -1,0 +1,13 @@
+/* Entrada do Tailwind 3. O GitHub gera static/site.css a partir daqui a cada publicação
+   (ver .github/workflows/publicar-render.yml). Não edite static/site.css à mão. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Card cinza pulsando enquanto os jogos carregam: mesma altura de um card real,
+     para a página não "pular" quando a lista chega */
+  .card-fantasma {
+    @apply h-[164px] rounded-xl border border-gray-800 bg-gray-900 animate-pulse;
+  }
+}

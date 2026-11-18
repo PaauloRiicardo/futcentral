@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 import json
 import os
@@ -20,20 +21,31 @@ app = FastAPI()
 # próprio Render, então no computador local isto não roda.
 URL_PUBLICA = os.environ.get("RENDER_EXTERNAL_URL", "").rstrip("/")
 INTERVALO_AUTO_VISITA = 10 * 60
+# Também deixa os jogos de hoje e de amanhã já prontos no cache, para quem abre o site
+# não esperar as consultas à ESPN (antes, a primeira visita de uma data levava ~14 s).
+INTERVALO_AQUECIMENTO = 4 * 60
 
 
 def _manter_acordado():
+    ultima_visita = time.time()
     while True:
-        time.sleep(INTERVALO_AUTO_VISITA)
         try:
-            requests.head(f"{URL_PUBLICA}/", timeout=30)
-        except requests.RequestException as e:
-            print(f"Auto-visita falhou (tenta de novo em 10 min): {e}")
+            hoje = datetime.now(BRT).date()
+            for dia in (hoje, hoje + timedelta(days=1)):
+                obter_jogos(dia.isoformat())
+        except Exception as e:  # nunca deixar a tarefa de fundo morrer
+            print(f"Aquecimento do cache falhou (tenta de novo em 4 min): {e!r}")
+        if time.time() - ultima_visita >= INTERVALO_AUTO_VISITA:
+            ultima_visita = time.time()
+            try:
+                requests.head(f"{URL_PUBLICA}/", timeout=30)
+            except requests.RequestException as e:
+                print(f"Auto-visita falhou (tenta de novo em 10 min): {e}")
+        time.sleep(INTERVALO_AQUECIMENTO)
 
 
-if URL_PUBLICA:
-    Thread(target=_manter_acordado, daemon=True, name="manter-acordado").start()
-
+# Compacta as respostas (a lista de jogos fica ~70% menor)
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -46,7 +58,7 @@ PAGINA = Path(__file__).parent / "site_esportivo.html"
 
 # Imagens da prévia nas redes (og.jpg) e ícones do site. Só estes nomes são servidos.
 PASTA_ESTATICA = Path(__file__).parent / "static"
-ARQUIVOS_ESTATICOS = {"og.jpg", "favicon.svg", "favicon.png", "apple-touch-icon.png"}
+ARQUIVOS_ESTATICOS = {"og.jpg", "favicon.svg", "favicon.png", "apple-touch-icon.png", "site.css"}
 CACHE_1_DIA = {"Cache-Control": "public, max-age=86400"}
 
 
@@ -162,8 +174,11 @@ def _erro(codigo, mensagem):
 # e sobreviver a reinícios do servidor (o --reload reinicia a cada alteração).
 # Dias que já passaram não mudam mais e ficam no cache para sempre; os dias
 # com jogos acontecendo agora expiram rápido para o placar ficar atualizado.
-CACHE_SEGUNDOS = 3 * 3600
-CACHE_SEGUNDOS_AO_VIVO = 60  # o site atualiza sozinho a cada 60 s
+# Quanto tempo os jogos de um campeonato num dia ficam no cache, conforme a situação:
+CACHE_SEGUNDOS = 3 * 3600          # dias futuros
+CACHE_SEGUNDOS_AO_VIVO = 60        # jogo em andamento ou começando nos próximos 15 min (o site atualiza a cada 60 s)
+CACHE_SEGUNDOS_HOJE = 10 * 60      # hoje, sem jogo rolando nem começando
+CACHE_SEGUNDOS_ENCERRADOS = 6 * 3600  # hoje, todos os jogos já terminaram (ou não há jogos)
 CACHE_ARQUIVO = Path(__file__).parent / ".cache" / "espn.json"
 _cache_lock = Lock()
 
@@ -259,6 +274,16 @@ def _resumir_evento(event):
     }
 
 
+def _validade_hoje(eventos):
+    # Cache curto só quando importa: algum jogo rolando ou começando em até 15 min
+    agora = time.time()
+    if any(e["estado"] == "in" or (e["estado"] == "pre" and e["startTimestamp"] <= agora + 15 * 60) for e in eventos):
+        return CACHE_SEGUNDOS_AO_VIVO
+    if all(e["estado"] == "post" for e in eventos):
+        return CACHE_SEGUNDOS_ENCERRADOS
+    return CACHE_SEGUNDOS_HOJE
+
+
 def buscar_eventos_liga(liga, data_api):
     chave = f"{CACHE_VERSAO}:{liga}:{data_api}"
     em_cache = _cache.get(chave)
@@ -268,7 +293,7 @@ def buscar_eventos_liga(liga, data_api):
         idade = time.time() - em_cache["salvo_em"]
         if dia < hoje - timedelta(days=1):
             return em_cache["eventos"]
-        validade = CACHE_SEGUNDOS_AO_VIVO if dia <= hoje else CACHE_SEGUNDOS
+        validade = CACHE_SEGUNDOS if dia > hoje else _validade_hoje(em_cache["eventos"])
         if idade < validade:
             return em_cache["eventos"]
 
@@ -278,10 +303,13 @@ def buscar_eventos_liga(liga, data_api):
         response = requests.get(url, params={"dates": data_api.replace("-", ""), "lang": "pt", "region": "br"}, timeout=20)
     except requests.RequestException as e:
         print(f"Erro na API da ESPN (liga {liga}): {e}")
-        return None
-    if response.status_code != 200:
+        response = None
+    if response is not None and response.status_code != 200:
         print(f"Erro na API da ESPN (liga {liga}, status {response.status_code}): {response.text[:200]}")
-        return None
+        response = None
+    if response is None:
+        # ESPN fora do ar: melhor mostrar os últimos dados guardados do que nada
+        return em_cache["eventos"] if em_cache else None
 
     eventos = [_resumir_evento(e) for e in response.json().get("events", []) if e.get("date")]
     with _cache_lock:
@@ -357,3 +385,7 @@ def obter_jogos(data: str):
     except Exception as e:
         print(f"Erro interno no servidor: {e!r}")
         return _erro(500, "Erro interno no servidor. Tente novamente em instantes.")
+
+
+if URL_PUBLICA:
+    Thread(target=_manter_acordado, daemon=True, name="manter-acordado").start()

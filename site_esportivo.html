@@ -45,7 +45,7 @@
         </div>
         <h1 class="text-xl font-extrabold tracking-wide text-white">Fut<span class="text-green-400">Central</span></h1>
       </div>
-      <div id="selo" class="flex items-center space-x-2 text-xs bg-gray-800 text-gray-400 border border-gray-700 px-3 py-1.5 rounded-full">
+      <div id="selo" class="min-w-[11.5rem] justify-center flex items-center space-x-2 text-xs bg-gray-800 text-gray-400 border border-gray-700 px-3 py-1.5 rounded-full">
         <span id="seloPonto" class="w-2 h-2 rounded-full bg-gray-500"></span>
         <span id="seloTexto" class="font-medium">Carregando...</span>
       </div>
@@ -80,7 +80,7 @@
   <!-- Conteúdo Principal -->
   <main class="max-w-6xl mx-auto px-4 py-6 flex-1 w-full">
     <div id="aviso" class="hidden mb-4 bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 text-sm rounded-lg px-4 py-3"></div>
-    <div id="container-jogos" class="space-y-4 min-h-[70vh]" aria-live="polite" aria-busy="true">
+    <div id="container-jogos" class="space-y-4 min-h-[calc(100vh-11rem)]" aria-live="polite" aria-busy="true">
       <!-- Cards fantasma enquanto os jogos carregam (mesmo tamanho dos cards reais) -->
       <div class="card-fantasma"></div><div class="card-fantasma"></div><div class="card-fantasma"></div>
     </div>
@@ -154,7 +154,7 @@
         : precisaAtualizar(data)
           ? ['bg-green-500/10 text-green-400 border-green-500/20', 'bg-green-400 animate-pulse', `Ao vivo · atualizado ${hora}`]
           : ['bg-gray-800 text-gray-400 border-gray-700', 'bg-gray-500', `Atualizado às ${hora}`];
-      document.getElementById('selo').className = `flex items-center space-x-2 text-xs border px-3 py-1.5 rounded-full ${classe}`;
+      document.getElementById('selo').className = `min-w-[11.5rem] justify-center flex items-center space-x-2 text-xs border px-3 py-1.5 rounded-full ${classe}`;
       document.getElementById('seloPonto').className = `w-2 h-2 rounded-full ${ponto}`;
       document.getElementById('seloTexto').textContent = texto;
     }

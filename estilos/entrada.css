@@ -4,6 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  /* Reserva o espaço da barra de rolagem desde o início: sem isso, no computador a página
+     toda "pula" para o lado quando a lista de jogos chega e a barra aparece (era o CLS 0,875) */
+  html {
+    scrollbar-gutter: stable;
+  }
+}
+
 @layer components {
   /* Card cinza pulsando enquanto os jogos carregam: mesma altura de um card real,
      para a página não "pular" quando a lista chega */

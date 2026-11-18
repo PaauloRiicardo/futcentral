@@ -33,7 +33,9 @@ jobs:
             (["first-contentful-paint","largest-contentful-paint","total-blocking-time","cumulative-layout-shift","speed-index","interactive","total-byte-weight","server-response-time"][] as $k
               | .audits[$k] | "METRICA|\($d)|\(.title)|\(.displayValue // "-")"),
             (.audits | to_entries[] | select(.value.score != null and .value.score < 0.9 and .value.scoreDisplayMode != "informative" and .value.scoreDisplayMode != "notApplicable" and .value.scoreDisplayMode != "manual")
-              | "FALHA|\($d)|\(.key)|\(.value.title)|\(.value.displayValue // "")")
+              | "FALHA|\($d)|\(.key)|\(.value.title)|\(.value.displayValue // "")"),
+            (.audits["layout-shifts"].details.items[]? | "MUDANCA|\($d)|score=\(.score)|\(.node.selector // "-")|\((.node.snippet // "-")[0:160])"),
+            (.audits["long-tasks"].details.items[]? | "TAREFA_LONGA|\($d)|\(.url)|\(.duration|round) ms")
           ' relatorio.json | tee resumo.txt
           { echo "### Lighthouse ($DISPOSITIVO)"; echo '```'; cat resumo.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
 

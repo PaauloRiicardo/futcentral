@@ -12,7 +12,7 @@
     "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil).",
     "Amistosos do Brasil em 14/11 e 17/11/2026: Imirante (09/11/2026) — Globo, SporTV e ge tv nos dois jogos.",
     "Liga das Nações 2026/27: direitos divididos entre SporTV (Globo) e ESPN/Disney+, escala definida jogo a jogo (Imirante 24/09/2026, SBT News e Portal de Prefeitura 01/10/2026). Cadastre o canal exato em 'jogos' quando a grade do dia sair.",
-    "Grade automática de 18/11/2026: Bolavip Brasil (jogos de hoje 18/11), Lance (jogos de hoje 18/11), Overdrive (jogos de hoje 18/11/2026), Trivela (Flamengo x Athletico 18/11)."
+    "Grade automática de 19/11/2026: Lance (jogos de hoje 19/11), Bolavip Brasil (jogos de hoje 19/11), Terra (Brasileirão, jogos desta quinta 19/11), Overdrive (jogos de hoje 19/11/2026)."
   ],
   "campeonatos": {
     "Brasileirão Série A": ["Premiere"],
@@ -41,7 +41,6 @@
   "jogos": {
     "2026-11-14 Japão x Brasil": ["Globo", "SporTV", "ge tv"],
     "2026-11-17 Singapura x Brasil": ["Globo", "SporTV", "ge tv"],
-    "2026-11-11 Londrina x Náutico": ["Disney+"],
     "2026-11-12 Armênia x Chipre": ["ESPN 3", "Disney+"],
     "2026-11-12 Turquia x Bélgica": ["SporTV 2"],
     "2026-11-12 Albania x Finlândia": ["Disney+"],
@@ -106,6 +105,8 @@
     "2026-11-17 Ucrânia x Georgia": ["YouTube ESPN Brasil", "Disney+"],
     "2026-11-17 Argentina x Costa Rica": ["SporTV", "ge tv"],
     "2026-11-18 Coritiba x Santos": ["Record", "CazéTV", "Premiere"],
-    "2026-11-18 Flamengo x Athletico-PR": ["SporTV", "Premiere"]
+    "2026-11-18 Flamengo x Athletico-PR": ["SporTV", "Premiere"],
+    "2026-11-19 Vasco da Gama x Internacional": ["SporTV", "Premiere"],
+    "2026-11-19 São Paulo x Fluminense": ["Globo", "ge tv", "Premiere"]
   }
 }

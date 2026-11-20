@@ -224,6 +224,12 @@
       vermelho: '<span class="inline-block w-2 h-3 bg-red-500 rounded-sm align-[-1px]" title="Cartão vermelho"></span>',
     };
 
+    // Linha dos times em 3 colunas: time | meio fixo | time.
+    // Assim o "VS"/placar fica sempre no centro e todos os cards ficam alinhados entre si,
+    // mesmo com nomes longos (que quebram linha dentro da própria coluna).
+    const COLUNAS_JOGO = 'grid grid-cols-[minmax(0,1fr)_4.5rem_minmax(0,1fr)] gap-x-2';
+    const NOME_TIME = 'min-w-0 font-bold text-sm sm:text-base leading-snug text-gray-100 [overflow-wrap:anywhere] hyphens-auto';
+
     function montarLances(lances) {
       if (!lances || lances.length === 0) return '';
       const colunas = { mandante: [], visitante: [] };
@@ -244,8 +250,8 @@
       };
       return `
           <div class="grid grid-cols-2 gap-x-6 text-xs text-gray-300 -mt-1 pb-1">
-            <ul class="space-y-0.5 text-right">${colunas.mandante.map(g => linha(g, 'mandante')).join('')}</ul>
-            <ul class="space-y-0.5">${colunas.visitante.map(g => linha(g, 'visitante')).join('')}</ul>
+            <ul class="min-w-0 space-y-0.5 text-right">${colunas.mandante.map(g => linha(g, 'mandante')).join('')}</ul>
+            <ul class="min-w-0 space-y-0.5">${colunas.visitante.map(g => linha(g, 'visitante')).join('')}</ul>
           </div>`;
     }
 
@@ -277,8 +283,8 @@
         // Antes do jogo mostra "VS"; durante e depois, o placar
         const temPlacar = jogo.estado !== 'pre' && jogo.placarMandante != null && jogo.placarVisitante != null;
         const meioHtml = temPlacar
-          ? `<div class="px-4 text-xl font-black tabular-nums ${jogo.estado === 'in' ? 'text-green-400' : 'text-white'}">${esc(jogo.placarMandante)} <span class="text-gray-400">x</span> ${esc(jogo.placarVisitante)}</div>`
-          : `<div class="px-4 text-xs font-black text-gray-400 uppercase">VS</div>`;
+          ? `<div class="text-center text-xl font-black tabular-nums whitespace-nowrap ${jogo.estado === 'in' ? 'text-green-400' : 'text-white'}">${esc(jogo.placarMandante)} <span class="text-gray-400">x</span> ${esc(jogo.placarVisitante)}</div>`
+          : `<div class="text-center text-xs font-black text-gray-400 uppercase">VS</div>`;
         const statusClasse = jogo.estado === 'in' ? 'bg-green-500/15 text-green-400' : 'bg-gray-800 text-gray-300';
         const lancesHtml = temPlacar ? montarLances(jogo.lances) : '';
 
@@ -288,10 +294,10 @@
             <span class="text-xs ${statusClasse} px-2 py-1 rounded font-mono">${esc(jogo.horario)} - ${esc(jogo.status)}</span>
           </div>
 
-          <div class="flex items-center justify-between py-2">
-            <div class="flex-1 text-right font-bold text-base text-gray-100">${esc(jogo.mandante)}</div>
+          <div class="${COLUNAS_JOGO} items-center py-2">
+            <div class="${NOME_TIME} text-right">${esc(jogo.mandante)}</div>
             ${meioHtml}
-            <div class="flex-1 text-left font-bold text-base text-gray-100">${esc(jogo.visitante)}</div>
+            <div class="${NOME_TIME} text-left">${esc(jogo.visitante)}</div>
           </div>
           ${lancesHtml}
 

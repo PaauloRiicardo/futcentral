@@ -12,7 +12,7 @@
     "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil).",
     "Amistosos do Brasil em 14/11 e 17/11/2026: Imirante (09/11/2026) — Globo, SporTV e ge tv nos dois jogos.",
     "Liga das Nações 2026/27: direitos divididos entre SporTV (Globo) e ESPN/Disney+, escala definida jogo a jogo (Imirante 24/09/2026, SBT News e Portal de Prefeitura 01/10/2026). Cadastre o canal exato em 'jogos' quando a grade do dia sair.",
-    "Grade automática de 20/11/2026: Lance (jogos de hoje 20/11), Bolavip Brasil (jogos de hoje 20/11), aRede (19/11), TVPop (20/11), Auvaro Maia (agenda 20/11)."
+    "Grade automática de 21/11/2026: Lance (jogos de hoje 21/11), Bolavip Brasil (jogos de hoje 21/11), Trivela (19–20/11, Palmeiras x Flamengo e Atlético-MG x Boca Juniors)."
   ],
   "campeonatos": {
     "Brasileirão Série A": ["Premiere"],
@@ -41,18 +41,6 @@
   "jogos": {
     "2026-11-14 Japão x Brasil": ["Globo", "SporTV", "ge tv"],
     "2026-11-17 Singapura x Brasil": ["Globo", "SporTV", "ge tv"],
-    "2026-11-13 Moldávia x Cazaquistão": ["ESPN 4", "Disney+"],
-    "2026-11-13 Sérvia x Alemanha": ["SporTV", "ge tv"],
-    "2026-11-13 Holanda x Grécia": ["ESPN", "Disney+"],
-    "2026-11-13 Escócia x Macedônia do Norte": ["Disney+", "YouTube ESPN Brasil"],
-    "2026-11-13 Eslovênia x Suíça": ["ESPN 4", "Disney+"],
-    "2026-11-13 Bulgária x Islândia": ["Disney+"],
-    "2026-11-13 Eslováquia x Ilhas Faroe": ["Disney+"],
-    "2026-11-13 Luxemburgo x Estonia": ["Disney+"],
-    "2026-11-13 Andorra x Gibraltar": ["Disney+"],
-    "2026-11-13 Liechtenstein x Azerbaijão": ["Disney+"],
-    "2026-11-13 Salamanca UDS x Celta de Vigo": ["ESPN 3", "Disney+"],
-    "2026-11-13 Argentina x Uruguai": ["SporTV"],
     "2026-11-14 Kosovo x Israel": ["ESPN"],
     "2026-11-14 Georgia x Hungria": ["SporTV"],
     "2026-11-14 Noruega x País de Gales": ["ESPN"],
@@ -101,6 +89,24 @@
     "2026-11-19 São Paulo x Fluminense": ["Globo", "ge tv", "Premiere"],
     "2026-11-20 Bayern Munich x Colônia": ["SporTV", "CazéTV", "XSports"],
     "2026-11-20 Troyes x Le Havre AC": ["CazéTV"],
-    "2026-11-20 Athletic Club x Espanyol": ["SportyNet"]
+    "2026-11-20 Athletic Club x Espanyol": ["SportyNet"],
+    "2026-11-21 Palmeiras x Flamengo": ["Globo", "Premiere", "ge tv"],
+    "2026-11-21 Atlético-MG x Boca Juniors": ["SBT", "ESPN", "Disney+", "Paramount+"],
+    "2026-11-21 Manchester City x Fulham": ["ESPN", "Disney+"],
+    "2026-11-21 AFC Bournemouth x Nottingham Forest": ["Disney+", "YouTube ESPN Brasil"],
+    "2026-11-21 Chelsea x Leeds United": ["ESPN", "Disney+"],
+    "2026-11-21 Newcastle United x Arsenal": ["CazéTV", "Disney+"],
+    "2026-11-21 Sevilla FC x Real Betis": ["SportyNet"],
+    "2026-11-21 Borussia Monchengladbach x Borussia Dortmund": ["SportyNet", "Jovem Pan Esportes (YouTube)", "OneFootball"],
+    "2026-11-21 Union Berlin x RB Leipzig": ["CazéTV", "OneFootball"],
+    "2026-11-21 Eintracht Frankfurt x Hoffenheim": ["Goat", "OneFootball"],
+    "2026-11-21 SV Elversberg x Freiburg": ["Goat", "OneFootball"],
+    "2026-11-21 Bayer Leverkusen x Paderborn": ["Romário TV (YouTube)", "OneFootball"],
+    "2026-11-21 Schalke 04 x VfB Stuttgart": ["SporTV 2", "SportyNet", "OneFootball"],
+    "2026-11-21 Lázio x Lecce": ["ESPN 3", "Disney+"],
+    "2026-11-21 Parma x AS Roma": ["ESPN", "Disney+"],
+    "2026-11-21 Napoli x Torino": ["ESPN 4", "Disney+"],
+    "2026-11-21 Nice x Paris Saint-Germain": ["CazéTV", "Xsports"],
+    "2026-11-21 Lille x Lyon": ["CazéTV", "Xsports"]
   }
 }

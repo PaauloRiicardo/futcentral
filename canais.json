@@ -12,7 +12,7 @@
     "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil).",
     "Amistosos do Brasil em 14/11 e 17/11/2026: Imirante (09/11/2026) — Globo, SporTV e ge tv nos dois jogos.",
     "Liga das Nações 2026/27: direitos divididos entre SporTV (Globo) e ESPN/Disney+, escala definida jogo a jogo (Imirante 24/09/2026, SBT News e Portal de Prefeitura 01/10/2026). Cadastre o canal exato em 'jogos' quando a grade do dia sair.",
-    "Grade automática de 21/11/2026: Lance (jogos de hoje 21/11), Bolavip Brasil (jogos de hoje 21/11), Trivela (19–20/11, Palmeiras x Flamengo e Atlético-MG x Boca Juniors)."
+    "Grade automática de 22/11/2026: O Povo (jogos de hoje 22/11), Bolavip Brasil (jogos de hoje 22/11), Olhar Digital (playoffs da Série B, 22/11)."
   ],
   "campeonatos": {
     "Brasileirão Série A": ["Premiere"],
@@ -39,23 +39,7 @@
     "Amistosos de Seleções": []
   },
   "jogos": {
-    "2026-11-14 Japão x Brasil": ["Globo", "SporTV", "ge tv"],
     "2026-11-17 Singapura x Brasil": ["Globo", "SporTV", "ge tv"],
-    "2026-11-14 Kosovo x Israel": ["ESPN"],
-    "2026-11-14 Georgia x Hungria": ["SporTV"],
-    "2026-11-14 Noruega x País de Gales": ["ESPN"],
-    "2026-11-14 Áustria x Irlanda": ["Disney+"],
-    "2026-11-14 Irlanda do Norte x Ucrânia": ["Disney+"],
-    "2026-11-14 Portugal x Dinamarca": ["SporTV"],
-    "2026-11-14 Romênia x Polônia": ["Disney+"],
-    "2026-11-14 Suécia x Bósnia e Herzegovina": ["ESPN 3"],
-    "2026-11-14 América Mineiro x Avaí": ["SportyNet", "Disney+"],
-    "2026-11-14 CRB x Ceará": ["RedeTV!", "SportyNet", "Disney+"],
-    "2026-11-14 Criciúma x Novorizontino": ["ESPN 4", "Disney+"],
-    "2026-11-14 Fortaleza x Vila Nova": ["ESPN", "Disney+"],
-    "2026-11-14 Juventude x Botafogo-SP": ["ESPN 2", "Goat", "Disney+"],
-    "2026-11-14 Mirassol x Atlético-MG": ["Amazon Prime Video"],
-    "2026-11-14 Chapecoense x Vasco da Gama": ["Premiere"],
     "2026-11-15 Chipre x Montenegro": ["ESPN", "Disney+"],
     "2026-11-15 Letônia x Armênia": ["Disney+"],
     "2026-11-15 Bielorússia x Albania": ["ESPN", "Disney+"],
@@ -107,6 +91,17 @@
     "2026-11-21 Parma x AS Roma": ["ESPN", "Disney+"],
     "2026-11-21 Napoli x Torino": ["ESPN 4", "Disney+"],
     "2026-11-21 Nice x Paris Saint-Germain": ["CazéTV", "Xsports"],
-    "2026-11-21 Lille x Lyon": ["CazéTV", "Xsports"]
+    "2026-11-21 Lille x Lyon": ["CazéTV", "Xsports"],
+    "2026-11-22 Hull City x Brighton & Hove Albion": ["ESPN", "Disney+"],
+    "2026-11-22 Sassuolo x Genoa": ["Disney+", "ESPN Brasil (YouTube)"],
+    "2026-11-22 Paris FC x Angers": ["CazéTV", "Xsports"],
+    "2026-11-22 Augsburg x Mainz": ["Goat"],
+    "2026-11-22 Liverpool x Manchester United": ["ESPN", "Disney+"],
+    "2026-11-22 Werder Bremen x Hamburg SV": ["Goat", "SportyNet", "Xsports"],
+    "2026-11-22 AC Milan x Frosinone": ["Disney+", "SportyNet"],
+    "2026-11-22 Criciúma x Fortaleza": ["RedeTV!", "SportyNet", "Disney+"],
+    "2026-11-22 Atalanta x Internazionale": ["ESPN", "Disney+"],
+    "2026-11-22 Fluminense x Mirassol": ["Record", "CazéTV", "Premiere"],
+    "2026-11-22 Atlético Goianiense x Vila Nova": ["ESPN", "Disney+", "Goat", "Xsports"]
   }
 }

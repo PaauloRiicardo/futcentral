@@ -12,7 +12,7 @@
     "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil).",
     "Amistosos do Brasil em 14/11 e 17/11/2026: Imirante (09/11/2026) — Globo, SporTV e ge tv nos dois jogos.",
     "Liga das Nações 2026/27: direitos divididos entre SporTV (Globo) e ESPN/Disney+, escala definida jogo a jogo (Imirante 24/09/2026, SBT News e Portal de Prefeitura 01/10/2026). Cadastre o canal exato em 'jogos' quando a grade do dia sair.",
-    "Grade automática de 23/11/2026: Bolavip Brasil (jogos de hoje 23/11), Correio (jogos de futebol hoje 23/11)."
+    "Grade automática de 24/11/2026: Bolavip Brasil (jogos de hoje 24/11), Antenados na TV & Streaming (Champions League 24 e 25/11, publicado 23/11)."
   ],
   "campeonatos": {
     "Brasileirão Série A": [
@@ -73,38 +73,6 @@
       "Globo",
       "SporTV",
       "ge tv"
-    ],
-    "2026-11-16 Ilhas Faroe x Moldávia": [
-      "SporTV 2"
-    ],
-    "2026-11-16 Cazaquistão x Eslováquia": [
-      "ESPN 4"
-    ],
-    "2026-11-16 Estonia x Bulgária": [
-      "SporTV 2"
-    ],
-    "2026-11-16 Islândia x Luxemburgo": [
-      "ESPN 4"
-    ],
-    "2026-11-16 Lituânia x Liechtenstein": [
-      "Disney+"
-    ],
-    "2026-11-16 Alemanha x Holanda": [
-      "ESPN",
-      "Disney+"
-    ],
-    "2026-11-16 Gibraltar x Malta": [
-      "Disney+"
-    ],
-    "2026-11-16 Grécia x Sérvia": [
-      "SporTV"
-    ],
-    "2026-11-16 Macedônia do Norte x Eslovênia": [
-      "Disney+"
-    ],
-    "2026-11-16 Suíça x Escócia": [
-      "ESPN 4",
-      "Disney+"
     ],
     "2026-11-17 Dinamarca x Noruega": [
       "ESPN",
@@ -308,6 +276,44 @@
     ],
     "2026-11-23 Santos x Grêmio": [
       "SporTV",
+      "Premiere"
+    ],
+    "2026-11-24 Bodo/Glimt x LASK Linz": [
+      "Space",
+      "HBO Max"
+    ],
+    "2026-11-24 Galatasaray x Aston Villa": [
+      "TNT",
+      "HBO Max"
+    ],
+    "2026-11-24 Arsenal x Borussia Dortmund": [
+      "TNT Sports (YouTube)",
+      "HBO Max"
+    ],
+    "2026-11-24 Como x AEK Athens": [
+      "HBO Max"
+    ],
+    "2026-11-24 Feyenoord Rotterdam x FC Porto": [
+      "HBO Max"
+    ],
+    "2026-11-24 Manchester City x Napoli": [
+      "Space",
+      "HBO Max"
+    ],
+    "2026-11-24 RB Leipzig x Lens": [
+      "HBO Max"
+    ],
+    "2026-11-24 Real Madrid x PSV Eindhoven": [
+      "SBT",
+      "TNT",
+      "HBO Max"
+    ],
+    "2026-11-24 Slovan Bratislava x Real Betis": [
+      "HBO Max"
+    ],
+    "2026-11-24 Chapecoense x Palmeiras": [
+      "Record",
+      "CazéTV",
       "Premiere"
     ]
   }

@@ -227,7 +227,7 @@
     // Linha dos times em 3 colunas: time | meio fixo | time.
     // Assim o "VS"/placar fica sempre no centro e todos os cards ficam alinhados entre si,
     // mesmo com nomes longos (que quebram linha dentro da própria coluna).
-    const COLUNAS_JOGO = 'grid grid-cols-[minmax(0,1fr)_4.5rem_minmax(0,1fr)] gap-x-2';
+    const COLUNAS_JOGO = 'flex justify-between';  // PROVA: layout antigo, desalinhado
     const NOME_TIME = 'min-w-0 font-bold text-sm sm:text-base leading-snug text-gray-100 [overflow-wrap:anywhere] hyphens-auto';
 
     function montarLances(lances) {

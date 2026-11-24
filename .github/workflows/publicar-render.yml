@@ -11,6 +11,9 @@ on:
       - ".github/workflows/manter-acordado.yml"
       - ".github/workflows/listar-jogos.yml"
       - ".github/workflows/medir-site.yml"
+      - "tests/**"                       # só testes: rodam no Pull Request, não precisam publicar
+      - "pytest.ini"
+      - "requirements-dev.txt"
   workflow_dispatch:                     # botão "Run workflow" para publicar na hora
 
 permissions:
@@ -21,7 +24,12 @@ concurrency:                             # dois pushes seguidos: só o último p
   cancel-in-progress: true
 
 jobs:
+  # Primeiro os testes; se algum falhar, nada abaixo roda e o site continua como está.
+  testes:
+    uses: ./.github/workflows/testes.yml
+
   deploy:
+    needs: testes
     runs-on: ubuntu-latest
     timeout-minutes: 6
     steps:

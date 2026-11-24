@@ -74,7 +74,7 @@ JOGOS_ESPN = {
             ("90'+2'", "v", None, "vermelho"),  # a ESPN repetiu o vermelho sem nome
             ("90'+2'", "v", "Raphinha", "vermelho"),
         ]),
-        _evento("202", "2026-11-14T15:00Z", "Andorra", "Malta", (1, 1)),  # seleções fora da lista: não aparece
+        _evento("202", "2026-11-14T15:00Z", "Andorra", "Malta", (0, 0), estado="pre"),  # seleções fora da lista: não aparece
         _evento("203", "2026-11-14T12:00Z", "Korea Republic", "Saudi Arabia", (0, 0)),  # nomes em inglês
     ],
     "ger.1": [

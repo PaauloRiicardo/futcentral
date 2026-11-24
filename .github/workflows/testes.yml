@@ -1,0 +1,39 @@
+# Testes do FutCentral: servidor (pytest), canais.json e a página no navegador (Playwright).
+# Rodam em todo Pull Request e, na main, ANTES de publicar (publicar-render.yml usa este arquivo):
+# teste falhou = o site não é publicado.
+name: Testes
+
+on:
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+
+      - name: Instalar dependências
+        run: |
+          pip install -r requirements.txt -r requirements-dev.txt
+          python -m playwright install --with-deps chromium
+
+      # O teste da página precisa do CSS com as classes atuais (o mesmo comando da publicação).
+      - name: Gerar CSS (Tailwind 3)
+        run: npx --yes tailwindcss@3.4.17 -i estilos/entrada.css -o static/site.css --content site_esportivo.html --minify
+
+      - name: Rodar os testes
+        run: pytest -v

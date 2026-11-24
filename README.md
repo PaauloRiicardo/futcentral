@@ -95,6 +95,20 @@ O WhatsApp e o Facebook guardam a prévia por alguns dias. Para forçar a atuali
 
 Cada jogo traz `liga`, `pais`, `regiao`, `regioes` (abas em que aparece), `mandante`, `visitante`, `placarMandante`, `placarVisitante`, `estado` (`pre`, `in` ou `post`), `horario` (Brasília), `status`, `transmissao` e `lances` (gols e cartões vermelhos: `tipo` `gol`/`vermelho`, `lado` `mandante`/`visitante`, `jogador`, `minuto`, `penalti`, `contra`; o gol contra fica no lado do time que ganhou o gol).
 
+## Testes
+Ficam em `tests/` e rodam sem internet (com uma ESPN falsa, montada com jogos reais de 14/11/2026):
+- `test_servidor.py`: gols/pênalti/gol contra/vermelho, horário de Brasília, filtro dos amistosos, ESPN fora do ar, cache, arquivos estáticos, compressão
+- `test_canais.py`: formato do `canais.json`
+- `test_pagina.py`: a página no navegador (cards alinhados no celular e no computador, gols, cards fantasma, mensagem de erro)
+
+Rodar no PC (PowerShell, com o ambiente virtual ativado):
+```powershell
+pip install -r requirements.txt -r requirements-dev.txt
+python -m playwright install chromium
+pytest
+```
+No GitHub, eles rodam em todo Pull Request e antes de cada publicação: **se um teste falhar, o site não é publicado.** As regras do projeto para agentes de IA (e para o `/code-review`) estão no `CLAUDE.md`.
+
 ## Publicar
 
 ```powershell

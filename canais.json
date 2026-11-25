@@ -12,7 +12,7 @@
     "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil).",
     "Amistosos do Brasil em 14/11 e 17/11/2026: Imirante (09/11/2026) — Globo, SporTV e ge tv nos dois jogos.",
     "Liga das Nações 2026/27: direitos divididos entre SporTV (Globo) e ESPN/Disney+, escala definida jogo a jogo (Imirante 24/09/2026, SBT News e Portal de Prefeitura 01/10/2026). Cadastre o canal exato em 'jogos' quando a grade do dia sair.",
-    "Grade automática de 24/11/2026: Bolavip Brasil (jogos de hoje 24/11), Antenados na TV & Streaming (Champions League 24 e 25/11, publicado 23/11)."
+    "Grade automática de 25/11/2026: Bolavip Brasil, O Povo e Lance! (jogos de hoje 25/11, publicados em 25/11/2026)."
   ],
   "campeonatos": {
     "Brasileirão Série A": [
@@ -69,41 +69,6 @@
     "Amistosos de Seleções": []
   },
   "jogos": {
-    "2026-11-17 Singapura x Brasil": [
-      "Globo",
-      "SporTV",
-      "ge tv"
-    ],
-    "2026-11-17 Dinamarca x Noruega": [
-      "ESPN",
-      "Disney+"
-    ],
-    "2026-11-17 País de Gales x Portugal": [
-      "SporTV"
-    ],
-    "2026-11-17 Bósnia e Herzegovina x Romênia": [
-      "Disney+"
-    ],
-    "2026-11-17 Hungria x Irlanda do Norte": [
-      "SporTV 3"
-    ],
-    "2026-11-17 Irlanda x Kosovo": [
-      "Disney+"
-    ],
-    "2026-11-17 Israel x Áustria": [
-      "ESPN 4"
-    ],
-    "2026-11-17 Polônia x Suécia": [
-      "SporTV 2"
-    ],
-    "2026-11-17 Ucrânia x Georgia": [
-      "YouTube ESPN Brasil",
-      "Disney+"
-    ],
-    "2026-11-17 Argentina x Costa Rica": [
-      "SporTV",
-      "ge tv"
-    ],
     "2026-11-18 Coritiba x Santos": [
       "Record",
       "CazéTV",
@@ -314,6 +279,41 @@
     "2026-11-24 Chapecoense x Palmeiras": [
       "Record",
       "CazéTV",
+      "Premiere"
+    ],
+    "2026-11-25 Sabah FK x Barcelona": [
+      "TNT",
+      "HBO Max"
+    ],
+    "2026-11-25 Slavia Prague x Villareal": [
+      "Space",
+      "HBO Max"
+    ],
+    "2026-11-25 Atlético de Madrid x Viking FK": [
+      "HBO Max"
+    ],
+    "2026-11-25 Club Brugge x Liverpool": [
+      "HBO Max"
+    ],
+    "2026-11-25 Internazionale x VfB Stuttgart": [
+      "HBO Max"
+    ],
+    "2026-11-25 Lille x Bayern Munich": [
+      "Space",
+      "TNT Sports (YouTube)",
+      "HBO Max"
+    ],
+    "2026-11-25 Paris Saint-Germain x AS Roma": [
+      "TNT",
+      "HBO Max"
+    ],
+    "2026-11-25 Shakhtar Donetsk x Fenerbahçe": [
+      "HBO Max"
+    ],
+    "2026-11-25 Sporting CP x Manchester United": [
+      "HBO Max"
+    ],
+    "2026-11-25 Atlético-MG x Corinthians": [
       "Premiere"
     ]
   }

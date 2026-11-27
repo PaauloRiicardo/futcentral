@@ -12,7 +12,7 @@
     "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil).",
     "Amistosos do Brasil em 14/11 e 17/11/2026: Imirante (09/11/2026) — Globo, SporTV e ge tv nos dois jogos.",
     "Liga das Nações 2026/27: direitos divididos entre SporTV (Globo) e ESPN/Disney+, escala definida jogo a jogo (Imirante 24/09/2026, SBT News e Portal de Prefeitura 01/10/2026). Cadastre o canal exato em 'jogos' quando a grade do dia sair.",
-    "Grade automática de 26/11/2026: Bolavip Brasil, O Povo e GCMais (jogos de hoje 26/11, publicados em 26/11/2026)."
+    "Grade automática de 27/11/2026: GCMais, Folha do Leste, Correio 24 Horas e Lance (jogos de hoje 27/11, publicados em 27/11/2026)."
   ],
   "campeonatos": {
     "Brasileirão Série A": [
@@ -69,15 +69,6 @@
     "Amistosos de Seleções": []
   },
   "jogos": {
-    "2026-11-19 Vasco da Gama x Internacional": [
-      "SporTV",
-      "Premiere"
-    ],
-    "2026-11-19 São Paulo x Fluminense": [
-      "Globo",
-      "ge tv",
-      "Premiere"
-    ],
     "2026-11-20 Bayern Munich x Colônia": [
       "SporTV",
       "CazéTV",
@@ -313,6 +304,32 @@
     "2026-11-26 Dinamo Zagreb x Bayer Leverkusen": [
       "CazéTV",
       "CNN Esportes (YouTube)"
+    ],
+    "2026-11-27 Werder Bremen x Borussia Monchengladbach": [
+      "CazéTV",
+      "SportyNet",
+      "OneFootball"
+    ],
+    "2026-11-27 Brest x Paris FC": [
+      "CazéTV",
+      "XSports"
+    ],
+    "2026-11-27 Nottingham Forest x Chelsea": [
+      "ESPN",
+      "Disney+"
+    ],
+    "2026-11-27 Maritimo x C.D. Nacional": [
+      "Disney+"
+    ],
+    "2026-11-27 Fluminense x Cruzeiro": [
+      "SporTV",
+      "Premiere"
+    ],
+    "2026-11-27 Vila Nova x Atlético Goianiense": [
+      "ESPN",
+      "Disney+",
+      "XSports",
+      "Goat"
     ]
   }
 }

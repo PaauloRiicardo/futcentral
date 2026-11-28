@@ -12,7 +12,7 @@
     "Grade do dia: oficinadanet.com.br (Jogos de hoje 28/10). Direitos: Trivela, TechTudo, UEFA, Wikipédia (Direitos de transmissão futebolística no Brasil).",
     "Amistosos do Brasil em 14/11 e 17/11/2026: Imirante (09/11/2026) — Globo, SporTV e ge tv nos dois jogos.",
     "Liga das Nações 2026/27: direitos divididos entre SporTV (Globo) e ESPN/Disney+, escala definida jogo a jogo (Imirante 24/09/2026, SBT News e Portal de Prefeitura 01/10/2026). Cadastre o canal exato em 'jogos' quando a grade do dia sair.",
-    "Grade automática de 27/11/2026: GCMais, Folha do Leste, Correio 24 Horas e Lance (jogos de hoje 27/11, publicados em 27/11/2026)."
+    "Grade automática de 28/11/2026: O Povo e Folha do Leste (jogos de hoje 28/11, publicados em 28/11/2026)."
   ],
   "campeonatos": {
     "Brasileirão Série A": [
@@ -69,17 +69,6 @@
     "Amistosos de Seleções": []
   },
   "jogos": {
-    "2026-11-20 Bayern Munich x Colônia": [
-      "SporTV",
-      "CazéTV",
-      "XSports"
-    ],
-    "2026-11-20 Troyes x Le Havre AC": [
-      "CazéTV"
-    ],
-    "2026-11-20 Athletic Club x Espanyol": [
-      "SportyNet"
-    ],
     "2026-11-21 Palmeiras x Flamengo": [
       "Globo",
       "Premiere",
@@ -330,6 +319,81 @@
       "Disney+",
       "XSports",
       "Goat"
+    ],
+    "2026-11-28 Palmeiras x Estudiantes de La Plata": [
+      "Globo",
+      "ge tv",
+      "ESPN",
+      "Disney+",
+      "Paramount+"
+    ],
+    "2026-11-28 Botafogo x Bahia": [
+      "Premiere",
+      "SporTV"
+    ],
+    "2026-11-28 Fortaleza x Criciúma": [
+      "RedeTV!",
+      "ESPN",
+      "Disney+",
+      "SportyNet"
+    ],
+    "2026-11-28 Real Betis x Rayo Vallecano": [
+      "SportyNet"
+    ],
+    "2026-11-28 Frosinone x Parma": [
+      "ESPN 2",
+      "Disney+"
+    ],
+    "2026-11-28 Torino x Lázio": [
+      "ESPN 2",
+      "Disney+"
+    ],
+    "2026-11-28 Internazionale x Genoa": [
+      "ESPN 4",
+      "Disney+"
+    ],
+    "2026-11-28 Leeds United x Conventry City": [
+      "ESPN",
+      "Disney+"
+    ],
+    "2026-11-28 Ipswich Town x Aston Villa": [
+      "ESPN 4",
+      "Disney+"
+    ],
+    "2026-11-28 Hamburg SV x Bayern Munich": [
+      "SportyNet",
+      "OneFootball"
+    ],
+    "2026-11-28 Colônia x SV Elversberg": [
+      "Goat",
+      "OneFootball"
+    ],
+    "2026-11-28 Mainz x Union Berlin": [
+      "OneFootball"
+    ],
+    "2026-11-28 Paderborn x Schalke 04": [
+      "OneFootball"
+    ],
+    "2026-11-28 VfB Stuttgart x Eintracht Frankfurt": [
+      "SportyNet",
+      "XSports",
+      "OneFootball"
+    ],
+    "2026-11-28 Paris Saint-Germain x Lorient": [
+      "CazéTV",
+      "XSports"
+    ],
+    "2026-11-28 Arouca x Rio Ave": [
+      "Disney+"
+    ],
+    "2026-11-28 Moreirense x Santa Clara": [
+      "Disney+"
+    ],
+    "2026-11-28 Académico de Viseu x Alverca": [
+      "Disney+"
+    ],
+    "2026-11-28 Vitória de Guimaraes x Estrela": [
+      "Disney+"
     ]
   }
 }
